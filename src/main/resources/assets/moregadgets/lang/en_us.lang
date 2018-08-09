@@ -1,0 +1,32 @@
+//Items
+item.moregadgets:blue_dust.name=Burnt Lapis dust
+item.moregadgets:air_filter.name=Air Filter
+item.moregadgets:wooden_rebreather.name=Wooden Rebreather
+item.moregadgets:stone_rebreather.name=Stone Rebreather
+item.moregadgets:iron_rebreather.name=Iron Rebreather
+item.moregadgets:gold_rebreather.name=Gold Rebreather
+item.moregadgets:diamond_rebreather.name=Diamond Rebreather
+item.moregadgets:emerald_rebreather.name=Emerald Rebreather
+
+//Item tools
+
+//Items tooltips
+toolips.moregadgets:rebreather.efficiency=§bAir:§7 %dx
+
+//Info Items
+
+//Blocks
+
+
+//Entities
+
+//Container
+
+//Misc
+
+//Configs
+
+
+//Keys
+
+//MSG
