@@ -27,6 +27,7 @@ public class MoreGadgets {
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
+		Proxy.registerRendersPreInit();
 		
 		logger.info("Pre Initialization Complete!");
 	}
