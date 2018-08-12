@@ -1,6 +1,7 @@
 package com.black_dog20.moregadgets.init;
 
 import com.black_dog20.moregadgets.item.ItemBase;
+import com.black_dog20.moregadgets.item.ItemHealthFood;
 import com.black_dog20.moregadgets.item.gadgets.ItemRebreather;
 import com.black_dog20.moregadgets.item.gadgets.ItemRebreather.RebreatherLevel;
 import com.black_dog20.moregadgets.reference.Reference;
@@ -23,6 +24,9 @@ public class ModItems {
 	public static final ItemRebreather diamondRebreather = new ItemRebreather("diamond_rebreather", RebreatherLevel.DIAMOND);
 	public static final ItemRebreather emeraldRebreather = new ItemRebreather("emerald_rebreather", RebreatherLevel.EMERALD);
 	
+	public static final ItemHealthFood witherBread = new ItemHealthFood("wither_bread", 0, 20, 5, 15, false);
+	public static final ItemHealthFood enderBread = new ItemHealthFood("ender_bread", 20, 20, 10, 30, false);
+	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> evt) {
 		IForgeRegistry<Item> r = evt.getRegistry();
@@ -35,5 +39,8 @@ public class ModItems {
 		r.register(goldRebreather);
 		r.register(diamondRebreather);
 		r.register(emeraldRebreather);
+		
+		r.register(witherBread);
+		r.register(enderBread);
 	}
 }
