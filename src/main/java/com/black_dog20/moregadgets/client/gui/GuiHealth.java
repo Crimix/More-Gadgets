@@ -7,7 +7,10 @@ import com.black_dog20.moregadgets.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
@@ -104,16 +107,16 @@ public class GuiHealth extends Gui {
                 j3 = this.updateCounter % MathHelper.ceil(f + 5.0F);
             }
 
-
-            for (int j5 = MathHelper.ceil((f + (float)k1) / 2.0F) - 1; j5 >= 0; --j5)
+            for (int j5 = 0; j5 <= MathHelper.ceil((f + (float)k1) / 2.0F) - 1; ++j5)
             {
+            	int j4 = MathHelper.ceil((float)(j5 + 1) / 10.0F) - 1;
                 int k5 = 16;
 
-                if (entityplayer.isPotionActive(MobEffects.POISON))
+                if (entityplayer.isPotionActive(MobEffects.POISON) && j4 == 1)
                 {
                     k5 += 36;
                 }
-                else if (entityplayer.isPotionActive(MobEffects.WITHER))
+                else if (entityplayer.isPotionActive(MobEffects.WITHER) && j4 == 1)
                 {
                     k5 += 72;
                 }
@@ -124,10 +127,9 @@ public class GuiHealth extends Gui {
                 {
                     i4 = 1;
                 }
-
-                int j4 = MathHelper.ceil((float)(j5 + 1) / 10.0F) - 1;
+                
                 int k4 = l + j5 % 10 * 8;
-                int l4 = j1 - j4 * i2;
+                int l4 = j1 - 0 * i2;
 
                 if (i <= 4)
                 {
@@ -184,66 +186,77 @@ public class GuiHealth extends Gui {
 
                     if (j5 * 2 + 1 == i)
                     {
-                        this.drawTexturedModalRect(k4, l4, k5 + 45, 9 * i5, 9, 9);
-                        
+                        this.drawTexturedModalRect(k4, l4, k5 + 45, 9 * i5, 9, 9);                        
                     }
                 }
             }
-            else if(j4 == 1){
-            	this.mc.getTextureManager().bindTexture(IRON_HEART);
-                if (flag)
+            else {
+            	
+            	GlStateManager.pushMatrix();
+            	if(j4 == 1)
+            		this.mc.getTextureManager().bindTexture(IRON_HEART);
+            	else if(j4 == 2)
+            		this.mc.getTextureManager().bindTexture(GOLD_HEART);
+            	else if(j4 == 3)
+            		this.mc.getTextureManager().bindTexture(DIAMOND_HEART);
+            	else if(j4 == 4)
+            		this.mc.getTextureManager().bindTexture(OBSIDIAN_HEART);
+            	if (flag)
                 {
                     if (j5 * 2 + 1 < j)
                     {
-                        this.drawTexturedModalRect(k4, l4, k5 + 54, 9 * i5, 9, 9);
+                    	this.customDrawTexturedModalRect(k4, l4, 0, 0, 9, 9);
                     }
 
                     if (j5 * 2 + 1 == j)
                     {
-                        this.drawTexturedModalRect(k4, l4, k5 + 63, 9 * i5, 9, 9);
+                    	this.customDrawTexturedModalRect(k4, l4, 9, 0, 9, 9);
                     }
                 }
 
-                if (l2 > 0)
-                {
-                    if (l2 == k1 && k1 % 2 == 1)
-                    {
-                        this.drawTexturedModalRect(k4, l4, k5 + 153, 9 * i5, 9, 9);
-                        --l2;
-                    }
-                    else
-                    {
-                        this.drawTexturedModalRect(k4, l4, k5 + 144, 9 * i5, 9, 9);
-                        l2 -= 2;
-                    }
-                }
-                else
-                {
+                
                     if (j5 * 2 + 1 < i)
                     {
-                        this.drawTexturedModalRect(k4, l4, k5 + 36, 9 * i5, 9, 9);
+                    	this.customDrawTexturedModalRect(k4, l4, 0, 0, 9, 9);
                     }
 
                     if (j5 * 2 + 1 == i)
                     {
-                        this.drawTexturedModalRect(k4, l4, k5 + 45, 9 * i5, 9, 9);
-                        
+                    	this.customDrawTexturedModalRect(k4, l4, 9, 0, 5, 9);                        
                     }
-                }
+                    
+                this.mc.getTextureManager().bindTexture(ICONS);	
+                GlStateManager.popMatrix();
             }
             }
         }
+    }
+    
+    public void customDrawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height)
+    {
+        float f = 1F / (float) 16;
+        float f1 = 1F / (float) 16;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.pos((double)(x + 0), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + 0) * f), (double)((float)(textureY + height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + width) * f), (double)((float)(textureY + height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)(y + 0), (double)this.zLevel).tex((double)((float)(textureX + width) * f), (double)((float)(textureY + 0) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + 0), (double)(y + 0), (double)this.zLevel).tex((double)((float)(textureX + 0) * f), (double)((float)(textureY + 0) * f1)).endVertex();
+        tessellator.draw();
     }
     
     
     @SubscribeEvent(priority = EventPriority.NORMAL)
 	public void onRender(RenderGameOverlayEvent.Pre event) {
     	if(event.getType() == ElementType.HEALTH) {
+    		if(((EntityPlayer)this.mc.getRenderViewEntity()).getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue() <= 100) {
     		if (!mc.gameSettings.hideGUI || mc.currentScreen != null)
     		{
     			render();
     		}
     		event.setCanceled(true);
+    		}
     	}
     }
     
