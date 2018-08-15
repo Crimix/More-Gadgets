@@ -12,6 +12,7 @@ item.moregadgets:emerald_rebreather.name=Emerald Rebreather
 
 //Items tooltips
 toolips.moregadgets:rebreather.efficiency=§bAir:§7 %dx
+toolips.moregadgets:items.soulbound=§dSoulbound§r
 
 //Info Items
 

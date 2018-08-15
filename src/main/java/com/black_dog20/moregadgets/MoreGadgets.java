@@ -1,17 +1,16 @@
 package com.black_dog20.moregadgets;
 
-import net.minecraftforge.common.MinecraftForge;
+import org.apache.logging.log4j.Logger;
+
+import com.black_dog20.moregadgets.init.Recipes;
+import com.black_dog20.moregadgets.proxies.IProxy;
+import com.black_dog20.moregadgets.reference.Reference;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.apache.logging.log4j.Logger;
-
-import com.black_dog20.moregadgets.handler.EventHandler;
-import com.black_dog20.moregadgets.init.Recipes;
-import com.black_dog20.moregadgets.proxies.IProxy;
-import com.black_dog20.moregadgets.reference.Reference;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.MC_VERSIONS, dependencies = Reference.DEPENDENCIES)
 public class MoreGadgets {
@@ -26,8 +25,7 @@ public class MoreGadgets {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
-		MinecraftForge.EVENT_BUS.register(new EventHandler());
-		Proxy.registerRendersPreInit();
+		Proxy.registerPreInit();
 		
 		logger.info("Pre Initialization Complete!");
 	}
