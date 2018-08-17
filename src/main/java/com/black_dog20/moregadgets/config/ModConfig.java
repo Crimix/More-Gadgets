@@ -9,9 +9,21 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(modid = Reference.MOD_ID)
-@Config.LangKey("nanotech.config.title")
+@Config.LangKey("config.moregadgets.title")
 public class ModConfig {
 	
+	@Config.LangKey("config.moregadgets.client")
+	public static final Client client = new Client();
+
+	@Config.LangKey("config.moregadgets.server")
+	public static final Server server = new Server();
+	
+	public static class Client{
+		
+		@Config.LangKey("config.moregadgets.useCustomHealthBar")
+		public boolean useCustomHealthBar = true;
+		
+	}
 	
 	
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)

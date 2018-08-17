@@ -28,7 +28,7 @@ public class SoulbindingRecipe implements IRecipe {
 
 			if (!stack.isEmpty())
 			{
-				if (stack.getItem() == ModItems.soulFragment)
+				if (stack.getItem() == ModItems.soulbinder)
 				{
 					if (fragment == null)
 					{
@@ -64,7 +64,7 @@ public class SoulbindingRecipe implements IRecipe {
 	@Override
 	public ItemStack getRecipeOutput()
 	{
-		return new ItemStack(ModItems.soulFragment);
+		return new ItemStack(ModItems.soulbinder);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class SoulbindingRecipe implements IRecipe {
 
 			if (!stack.isEmpty())
 			{
-				if (stack.getItem() != ModItems.soulFragment)
+				if (stack.getItem() != ModItems.soulbinder)
 				{
 					target = stack;
 				}

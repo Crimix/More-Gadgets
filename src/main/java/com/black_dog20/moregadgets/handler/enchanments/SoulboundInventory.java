@@ -9,14 +9,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 
-public class SoulInventory {
+public class SoulboundInventory {
 
     public final NonNullList<ItemStack> mainInventory;
     public final NonNullList<ItemStack> armorInventory;
     public final NonNullList<ItemStack> offHandInventory;
     public final EntityPlayer player;
     
-    private SoulInventory(EntityPlayer player, boolean load) {
+    private SoulboundInventory(EntityPlayer player, boolean load) {
     	this.player = player;
 		this.mainInventory = NonNullList.<ItemStack>withSize(player.inventory.mainInventory.size(), ItemStack.EMPTY);
 		this.armorInventory = NonNullList.<ItemStack>withSize(player.inventory.armorInventory.size(), ItemStack.EMPTY);
@@ -26,7 +26,7 @@ public class SoulInventory {
 			readFromNBT();
     }
     
-	public SoulInventory(EntityPlayer player) {
+	public SoulboundInventory(EntityPlayer player) {
 		this.player = player;
 		this.mainInventory = NonNullList.<ItemStack>withSize(player.inventory.mainInventory.size(), ItemStack.EMPTY);
 		this.armorInventory = NonNullList.<ItemStack>withSize(player.inventory.armorInventory.size(), ItemStack.EMPTY);
@@ -37,8 +37,8 @@ public class SoulInventory {
 		copyOffHand();
 	}
 	
-	public static SoulInventory GetForPlayer(EntityPlayer player) {
-		return new SoulInventory(player, true);
+	public static SoulboundInventory GetForPlayer(EntityPlayer player) {
+		return new SoulboundInventory(player, true);
 	}
 	
 	private void copyMain() {

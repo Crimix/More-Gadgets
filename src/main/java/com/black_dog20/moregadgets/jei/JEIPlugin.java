@@ -17,14 +17,10 @@ public class JEIPlugin implements IModPlugin{
 
 	@Override
 	public void registerIngredients(IModIngredientRegistration registry) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void register(IModRegistry registry) {
-		
-		
 	}
 		
 

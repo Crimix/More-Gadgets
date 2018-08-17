@@ -17,6 +17,5 @@ public class ModBlocks {
 	public static void registerBlocks(RegistryEvent.Register<Block> evt) {
 		IForgeRegistry<Block> r = evt.getRegistry();
 		
-
 	}
 }

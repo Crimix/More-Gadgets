@@ -44,6 +44,7 @@ public class ItemRebreather extends ItemBase{
 	public void onLivingUpdatePlayer(LivingUpdateEvent event) {
 		if(event.getEntity() instanceof EntityPlayer && !event.getEntity().world.isRemote) {
 			EntityPlayer player = (EntityPlayer) event.getEntity();
+			
 			if(hasRebreather(player) && player.isInsideOfMaterial(Material.WATER)) {
 				NBTTagCompound nbt = player.getEntityData();
 				int tick = nbt.getInteger("rebreatherTick");
@@ -141,7 +142,7 @@ public class ItemRebreather extends ItemBase{
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		tooltip.add(I18n.format("toolips.moregadgets:rebreather.efficiency", material.efficiency));
+		tooltip.add(I18n.format("tooltips.moregadgets:rebreather.efficiency", material.efficiency));
 	}
 	
 	public static enum RebreatherLevel

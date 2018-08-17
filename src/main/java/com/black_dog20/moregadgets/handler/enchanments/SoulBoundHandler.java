@@ -8,16 +8,20 @@ import com.black_dog20.moregadgets.reference.NBTTags;
 import com.black_dog20.moregadgets.reference.Reference;
 import com.black_dog20.moregadgets.utility.NBTHelper;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 /**
@@ -27,8 +31,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * The way I am handling the saving of soulbound items is different to EnderIO and also it retains the slot location if possible.
  */
 @EventBusSubscriber(modid = Reference.MOD_ID)
-public class SoulHandler {
+public class SoulBoundHandler {
 
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public static void onToolTipEvent(ItemTooltipEvent event) {
+		if(event.getItemStack().getTagCompound() == null || !event.getItemStack().getTagCompound().hasKey(NBTTags.SOULBOUND))
+			return;
+		event.getToolTip().add(I18n.format("tooltips.moregadgets:items.soulbound"));
+	}
+	
 	@SubscribeEvent(priority=EventPriority.LOWEST)
 	public static void onPlayerDeath(LivingDeathEvent event) {
 		if(event.getEntity() != null && event.getEntity() instanceof EntityPlayer && !(event.getEntity() instanceof FakePlayer)) {
@@ -37,7 +49,7 @@ public class SoulHandler {
 				return;
 			if(event.isCanceled())
 				return;
-			SoulInventory soul = new SoulInventory(player);
+			SoulboundInventory soul = new SoulboundInventory(player);
 			if(event.isCanceled())
 				return;
 			soul.writeToNBT();
@@ -78,7 +90,7 @@ public class SoulHandler {
 			return;
 		}
 
-		SoulInventory soul = SoulInventory.GetForPlayer(player);
+		SoulboundInventory soul = SoulboundInventory.GetForPlayer(player);
 		ListIterator<EntityItem> iter = event.getDrops().listIterator();
 		while (iter.hasNext()) {
 			EntityItem ei = iter.next();
@@ -106,7 +118,7 @@ public class SoulHandler {
 		if (original == player || original.inventory == player.inventory || (original.inventory.armorInventory == player.inventory.armorInventory && original.inventory.mainInventory == player.inventory.mainInventory))
 			return;
 
-		SoulInventory soul = new SoulInventory(player);
+		SoulboundInventory soul = new SoulboundInventory(player);
 		soul.readFromNBT();
 
 		for (int i = 0; i < soul.armorInventory.size(); i++) {
@@ -161,7 +173,7 @@ public class SoulHandler {
 		if (original == player || original.inventory == player.inventory || (original.inventory.armorInventory == player.inventory.armorInventory && original.inventory.mainInventory == player.inventory.mainInventory))
 			return;
 
-		SoulInventory soul = new SoulInventory(player);
+		SoulboundInventory soul = new SoulboundInventory(player);
 		soul.readFromNBT();
 
 		for (int i = 0; i < soul.armorInventory.size(); i++) {

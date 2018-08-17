@@ -1,5 +1,5 @@
 //Items
-item.moregadgets:blue_dust.name=Burnt Lapis dust
+item.moregadgets:blue_dust.name=Burnt Lapis Dust
 item.moregadgets:air_filter.name=Air Filter
 item.moregadgets:wooden_rebreather.name=Wooden Rebreather
 item.moregadgets:stone_rebreather.name=Stone Rebreather
@@ -7,26 +7,44 @@ item.moregadgets:iron_rebreather.name=Iron Rebreather
 item.moregadgets:gold_rebreather.name=Gold Rebreather
 item.moregadgets:diamond_rebreather.name=Diamond Rebreather
 item.moregadgets:emerald_rebreather.name=Emerald Rebreather
+item.moregadgets:wither_bread.name=Wither Bread
+item.moregadgets:ender_bread.name=Ender Dragon Bread
+item.moregadgets:soul_binder.name=Soul Binder
+item.moregadgets:soul_fragment.name=Fragment of a Soul
+item.moregadgets:unfired_soul_book.name=Incomplete Soul Ripping Book
 
 //Item tools
 
 //Items tooltips
-toolips.moregadgets:rebreather.efficiency=§bAir:§7 %dx
-toolips.moregadgets:items.soulbound=§dSoulbound§r
+tooltips.moregadgets:rebreather.efficiency=§bAir:§7 %dx
+tooltips.moregadgets:items.soulbound=§dSoulbound§r
+tooltips.moregadgets:items.sneak=§8 - Press %s for more info§r
+tooltips.moregadgets:items.soulrip=§8 - %d%% chance to rip a piece of the soul from a dying enemy§r
 
 //Info Items
 
 //Blocks
 
+//Enchantments
+enchantment.more_gadgets_soul_rip=§dSoul Ripping
 
 //Entities
 
 //Container
 
 //Misc
+itemGroup.more_gadgets=More Gadgets
 
 //Configs
+config.moregadgets.title=More Gadgets
+config.moregadgets.server=Server
+config.moregadgets.client=Client
 
+//Configs client
+config.moregadgets.useCustomHealthBar=Use the custom health bar
+
+//Configs server
+config.moregadgets.percentageDropSoulPiece=Soul Piece drop chance percentage
 
 //Keys
 

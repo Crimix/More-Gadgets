@@ -27,7 +27,9 @@ public class ModItems {
 	public static final ItemHealthFood witherBread = new ItemHealthFood("wither_bread", 0, 20, 5, 15, false);
 	public static final ItemHealthFood enderBread = new ItemHealthFood("ender_bread", 20, 20, 10, 30, false);
 	
-	public static final ItemBase soulFragment = (ItemBase) new ItemBase("soul_fragment").setMaxStackSize(1);
+	public static final ItemBase soulbinder = (ItemBase) new ItemBase("soul_binder").setMaxStackSize(1);
+	public static final ItemBase soulFragment = new ItemBase("soul_fragment");
+	public static final ItemBase unfiredSoulBook = new ItemBase("unfired_soul_book");
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> evt) {
@@ -45,6 +47,8 @@ public class ModItems {
 		r.register(witherBread);
 		r.register(enderBread);
 		
+		r.register(soulbinder);
 		r.register(soulFragment);
+		r.register(unfiredSoulBook);
 	}
 }
