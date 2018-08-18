@@ -1,7 +1,11 @@
 package com.black_dog20.moregadgets.item;
 
+import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -35,6 +39,24 @@ public class ItemHealthFood extends ItemFoodBase {
         	health.removeModifier(MORE_GADGETS_HEALTH);
         	health.applyModifier(healthModifier);
         }
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+		if(Minecraft.getMinecraft().player != null) {
+        IAttributeInstance health = Minecraft.getMinecraft().player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+        AttributeModifier healthModifier = health.getModifier(MORE_GADGETS_HEALTH);
+        
+        tooltip.add(I18n.format("tooltips.moregadgets:healthfood.heal", this.getHealAmount(stack)));
+        
+        if(minHealth <= healthModifier.getAmount() && healthModifier.getAmount() < minHealth + maxHealthGained)
+        	tooltip.add(I18n.format("tooltips.moregadgets:healthfood.can_gain", 1, maxHealthGained));
+        else if (healthModifier.getAmount() >= minHealth + maxHealthGained)
+        	tooltip.add(I18n.format("tooltips.moregadgets:healthfood.cannot_gain"));
+        else
+        	tooltip.add(I18n.format("tooltips.moregadgets:healthfood.not_ready"));
+		}
 	}
 
 }

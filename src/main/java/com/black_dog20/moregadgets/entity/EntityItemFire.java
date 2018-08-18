@@ -1,16 +1,16 @@
 package com.black_dog20.moregadgets.entity;
 
+import javax.annotation.Nonnull;
+
+import com.black_dog20.moregadgets.handler.enchanments.SoulRipEnchantment;
+import com.black_dog20.moregadgets.init.recipehandlers.FireRecipes;
+import com.black_dog20.moregadgets.utility.Helper;
 
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
-
-import com.black_dog20.moregadgets.init.recipehandlers.FireRecipes;
 
 public class EntityItemFire extends EntityItem {
     public boolean changed;

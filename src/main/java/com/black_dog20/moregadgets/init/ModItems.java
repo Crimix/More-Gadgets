@@ -7,6 +7,7 @@ import com.black_dog20.moregadgets.item.gadgets.ItemRebreather.RebreatherLevel;
 import com.black_dog20.moregadgets.reference.Reference;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,7 +30,9 @@ public class ModItems {
 	
 	public static final ItemBase soulbinder = (ItemBase) new ItemBase("soul_binder").setMaxStackSize(1);
 	public static final ItemBase soulFragment = new ItemBase("soul_fragment");
-	public static final ItemBase unfiredSoulBook = new ItemBase("unfired_soul_book");
+	public static final ItemBase unfiredSoulBook = (ItemBase) new ItemBase("unfired_soul_book").setMaxStackSize(1);
+	
+	public static ItemStack enchantedBook = ItemStack.EMPTY;
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> evt) {

@@ -1,14 +1,12 @@
 package com.black_dog20.moregadgets.init;
 
-import com.black_dog20.moregadgets.handler.enchanments.SoulRipEnchantment;
 import com.black_dog20.moregadgets.init.recipehandlers.FireRecipes;
 import com.black_dog20.moregadgets.init.recipehandlers.SoulbindingRecipe;
 import com.black_dog20.moregadgets.reference.Reference;
 import com.black_dog20.moregadgets.utility.RecipeToJSON;
 
-import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -19,15 +17,18 @@ import net.minecraftforge.oredict.RecipeSorter.Category;
 @GameRegistry.ObjectHolder(Reference.MOD_ID)
 public class Recipes {
 
+	
 	public static final SoulbindingRecipe soulRecipe = new SoulbindingRecipe();
 	
 	public static void init() {
 		RecipeSorter.register("moreGadgetsSoulbinding", soulRecipe.getClass(), Category.SHAPELESS, "");
 		ForgeRegistries.RECIPES.register(soulRecipe);
-		FireRecipes.init();
 		generateJSON();
 	}
 	
+	public static void postInit() {
+		FireRecipes.init();
+	}
 	
 	
 	private static void generateJSON() {
@@ -37,6 +38,17 @@ public class Recipes {
 		RecipeToJSON toJSON = new RecipeToJSON(Reference.MOD_ID, true);
 		
 		toJSON.addShapedRecipe(ModItems.unfiredSoulBook, new Object[]{"ls","bg", 'b', Items.BOOK, 'l', ModItems.blueDust, 's', Items.NETHER_STAR, 'g', Items.GHAST_TEAR});
+		toJSON.addShapedRecipe(ModItems.witherBread, new Object[]{"lsl","gbg", "ggg", 'b', Items.BREAD, 'l', ModItems.soulFragment, 's', Items.NETHER_STAR, 'g', Blocks.SOUL_SAND});
+		toJSON.addShapedRecipe(ModItems.enderBread, new Object[]{"lsl","gbg", "ggg", 'b', Items.BREAD, 'l', ModItems.soulFragment, 's', Items.DRAGON_BREATH, 'g', Items.ENDER_EYE});
+		toJSON.addShapedRecipe(ModItems.airFilter, new Object[]{"lsl","scs", "lsl", 'c', Blocks.REEDS, 'l', ModItems.blueDust, 's', Items.STRING});
+		toJSON.addShapelessRecipe(ModItems.soulbinder, ModItems.soulFragment, Items.ENDER_EYE, Items.NETHER_STAR, Items.GHAST_TEAR);
+		
+		toJSON.addShapedRecipe(ModItems.woodenRebreather, new Object[]{" w ","waw", "www", 'w', "logWood", 'a', ModItems.airFilter});
+		toJSON.addShapedRecipe(ModItems.stoneRebreather, new Object[]{" w ","waw", "www", 'w', "stone", 'a', ModItems.airFilter});
+		toJSON.addShapedRecipe(ModItems.ironRebreather, new Object[]{" w ","waw", "www", 'w', "ingotIron", 'a', ModItems.airFilter});
+		toJSON.addShapedRecipe(ModItems.goldRebreather, new Object[]{" w ","waw", "www", 'w', "ingotGold", 'a', ModItems.airFilter});
+		toJSON.addShapedRecipe(ModItems.diamondRebreather, new Object[]{" w ","waw", "www", 'w', "gemDiamond", 'a', ModItems.airFilter});
+		toJSON.addShapedRecipe(ModItems.emeraldRebreather, new Object[]{" w ","waw", "www", 'w', "gemEmerald", 'a', ModItems.airFilter});
 	}
 
 }

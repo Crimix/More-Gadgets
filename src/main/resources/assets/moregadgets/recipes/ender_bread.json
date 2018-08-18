@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lsl",
+    "gbg",
+    "ggg"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:bread"
+    },
+    "s": {
+      "item": "minecraft:dragon_breath"
+    },
+    "g": {
+      "item": "minecraft:ender_eye"
+    },
+    "l": {
+      "item": "moregadgets:soul_fragment"
+    }
+  },
+  "result": {
+    "item": "moregadgets:ender_bread"
+  }
+}

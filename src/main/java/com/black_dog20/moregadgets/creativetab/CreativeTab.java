@@ -6,7 +6,6 @@ import com.black_dog20.moregadgets.reference.Reference;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;

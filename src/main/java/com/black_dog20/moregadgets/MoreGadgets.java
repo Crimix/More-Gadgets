@@ -49,6 +49,7 @@ public class MoreGadgets {
 
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		Recipes.postInit();
 		logger.info("Post Initialization Complete!");
 	}
 }

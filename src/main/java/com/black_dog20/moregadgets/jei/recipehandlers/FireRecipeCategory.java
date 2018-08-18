@@ -7,8 +7,6 @@ import com.black_dog20.moregadgets.jei.RecipeCategoryUid;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IDrawableAnimated;
-import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
@@ -22,18 +20,16 @@ public class FireRecipeCategory implements IRecipeCategory<FireRecipeWrapper> {
 	protected static final int inputSlot = 0;
 	protected static final int outputSlot = 1;
 
-	protected final IDrawableStatic staticArrow;
-	protected final IDrawableAnimated arrow;
 	private final String localizedName;
 	private final IDrawable background;
+	private final IDrawable icon;
 
 	public FireRecipeCategory(IGuiHelper guiHelper) {
-		ResourceLocation gui = new ResourceLocation("gadgetron:textures/gui/machine.png");
-		staticArrow = guiHelper.createDrawable(gui, 176, 14, 24, 17);
-		arrow = guiHelper.createAnimatedDrawable(staticArrow, 200, IDrawableAnimated.StartDirection.LEFT, false);
+		ResourceLocation gui = new ResourceLocation("moregadgets:textures/gui/fire_recipe.png");
 		
-		background = guiHelper.createDrawable(gui, 52, 27, 87, 31);
-		localizedName = I18n.format("gadgetron.container.extractor");
+		icon = guiHelper.createDrawable(gui, 77, 64, 15, 14);
+		background = guiHelper.createDrawable(gui, 72, 17, 67, 64);
+		localizedName = I18n.format("container.moregadgets.fire");
 	}
 
 	@Override
@@ -43,7 +39,7 @@ public class FireRecipeCategory implements IRecipeCategory<FireRecipeWrapper> {
 
 	@Override
 	public IDrawable getIcon() {
-		return null;
+		return icon;
 	}
 
 	@Override
@@ -53,15 +49,14 @@ public class FireRecipeCategory implements IRecipeCategory<FireRecipeWrapper> {
 
 	@Override
 	public void drawExtras(Minecraft minecraft) {
-		arrow.draw(minecraft, 27, 7);		
 	}
 
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, FireRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
-		guiItemStacks.init(inputSlot, true, 3, 7);
-		guiItemStacks.init(outputSlot, false, 63, 7);
+		guiItemStacks.init(inputSlot, true, 3, 2);
+		guiItemStacks.init(outputSlot, false, 48, 46);
 
 		guiItemStacks.set(ingredients);
 	}

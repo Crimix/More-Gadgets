@@ -20,8 +20,16 @@ tooltips.moregadgets:rebreather.efficiency=§bAir:§7 %dx
 tooltips.moregadgets:items.soulbound=§dSoulbound§r
 tooltips.moregadgets:items.sneak=§8 - Press %s for more info§r
 tooltips.moregadgets:items.soulrip=§8 - %d%% chance to rip a piece of the soul from a dying enemy§r
+tooltips.moregadgets:healthfood.not_ready=Your body is not ready to gain extra health from eating this
+tooltips.moregadgets:healthfood.can_gain=You can gain §c+%d max hp§7 of §c%d hp§r
+tooltips.moregadgets:healthfood.cannot_gain=You cannot gain more max hp
+tooltips.moregadgets:healthfood.heal=Heals: §c%d§r
+tooltips.moregadgets:soulFragment.drop=Dropped by mobs killed with the §d%s§7 enchantment
+tooltips.moregadgets:blue_dust.create=Created by throwing §9%s§7 into fire.
 
 //Info Items
+item.moregadgets:soul_fragment.info=Sometimes dropped by monsters killed with a weapon enchanted with the §dSoul Ripping§r enchantment.
+item.moregadgets:soul_fragment.info2=Used for items that have an impact on the soul.
 
 //Blocks
 
@@ -31,6 +39,7 @@ enchantment.more_gadgets_soul_rip=§dSoul Ripping
 //Entities
 
 //Container
+container.moregadgets.fire=Fire Recipes
 
 //Misc
 itemGroup.more_gadgets=More Gadgets

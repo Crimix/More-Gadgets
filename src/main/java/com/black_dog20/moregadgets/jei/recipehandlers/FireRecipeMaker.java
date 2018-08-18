@@ -23,7 +23,7 @@ public final class FireRecipeMaker {
 
 		for (FireRecipe entry : map) {
 			ItemStack input = entry.getInput();
-			ItemStack output = entry.getResult();
+			ItemStack output = entry.getResult().copy();
 
 			List<ItemStack> inputs = stackHelper.getSubtypes(input);
 			FireRecipeWrapper recipe = new FireRecipeWrapper(inputs, output);

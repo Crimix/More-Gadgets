@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lsl",
+    "scs",
+    "lsl"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:air"
+    },
+    "s": {
+      "item": "minecraft:string"
+    },
+    "l": {
+      "item": "moregadgets:soul_fragment"
+    }
+  },
+  "result": {
+    "item": "moregadgets:air_filter"
+  }
+}

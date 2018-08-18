@@ -1,14 +1,19 @@
 package com.black_dog20.moregadgets.init.recipehandlers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.black_dog20.moregadgets.entity.EntityItemFire;
 import com.black_dog20.moregadgets.handler.enchanments.SoulRipEnchantment;
 import com.black_dog20.moregadgets.init.ModItems;
 import com.black_dog20.moregadgets.reference.Reference;
+import com.black_dog20.moregadgets.utility.Helper;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
@@ -27,7 +32,11 @@ public class FireRecipes {
 	
 	public static void init() {
 		recipes.add(new FireRecipe(new ItemStack(Items.DYE, 1, 4), new ItemStack(ModItems.blueDust)));
-		recipes.add(new FireRecipe(new ItemStack(ModItems.unfiredSoulBook), ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(SoulRipEnchantment.soulRipEnchantment, 1))));
+		ItemStack st = new ItemStack(Items.ENCHANTED_BOOK);
+		Map<Enchantment, Integer> map = new HashMap<Enchantment, Integer>();
+		map.put(SoulRipEnchantment.soulRipEnchantment, 1);
+		EnchantmentHelper.setEnchantments(map, st);
+		recipes.add(new FireRecipe(new ItemStack(ModItems.unfiredSoulBook), st));
 	}
 	
 	public static boolean isRecipeInput(EntityItem e){
@@ -41,16 +50,21 @@ public class FireRecipes {
 	public static ItemStack getResult(EntityItem e) {
 		ItemStack result = ItemStack.EMPTY;
 		for(FireRecipe r : recipes) {
-			if(r.sameAsEntityItem(e))
+			if(r.sameAsEntityItem(e)) {
 				result = r.getResult();
+				//System.out.println(Helper.doesItemHaveEnchantment(result, SoulRipEnchantment.soulRipEnchantment));
+			}
 		}
-		result.setCount(e.getItem().getCount());
+		if(result.getMaxStackSize() > 1)
+			result.setCount(e.getItem().getCount());
 		return result;
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onEntityAdded(EntityJoinWorldEvent event) {
-
+		if(event.getWorld().isRemote)
+			return;
+		
 		final Entity entity = event.getEntity();
 		if (entity instanceof EntityItem && !(entity instanceof EntityItemFire)) {
 			EntityItem entityItem = (EntityItem) entity;
@@ -85,16 +99,8 @@ public class FireRecipes {
 		}
 		
 		public ItemStack getResult() {
+			System.out.println(Helper.doesItemHaveEnchantment(result, SoulRipEnchantment.soulRipEnchantment));
 			return result;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if(!(obj instanceof FireRecipe))
-				return false;
-			
-			FireRecipe other = (FireRecipe) obj;
-			return this.input.getItem() == other.getInput().getItem() && this.input.getMetadata() == other.getInput().getMetadata();
 		}
 		
 		public boolean sameAsEntityItem(EntityItem obj) {
