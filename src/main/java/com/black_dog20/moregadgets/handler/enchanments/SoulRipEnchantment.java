@@ -3,6 +3,7 @@ package com.black_dog20.moregadgets.handler.enchanments;
 import org.lwjgl.input.Keyboard;
 
 import com.black_dog20.moregadgets.MoreGadgets;
+import com.black_dog20.moregadgets.init.ModEnchantments;
 import com.black_dog20.moregadgets.init.ModItems;
 import com.black_dog20.moregadgets.reference.Reference;
 import com.black_dog20.moregadgets.utility.Helper;
@@ -14,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -25,18 +25,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @EventBusSubscriber(modid = Reference.MOD_ID)
 public class SoulRipEnchantment extends Enchantment{
 
-	public static final SoulRipEnchantment soulRipEnchantment = new SoulRipEnchantment();
-	
-	@SubscribeEvent
-	public static void register(Register<Enchantment> event) {
-		event.getRegistry().register(soulRipEnchantment);
-	}
-
-	protected SoulRipEnchantment() {
+	public SoulRipEnchantment() {
 		super(Rarity.RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
-		this.setName("more_gadgets_soul_rip");
-		this.setRegistryName(new ResourceLocation(Reference.MOD_ID, this.getName()));
-		
+		this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "soul_rip"));
 	}
 
 	@Override
@@ -51,7 +42,7 @@ public class SoulRipEnchantment extends Enchantment{
 		
 		if(event.getEntity() != null && event.getSource().getTrueSource() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
-			if(player.getHeldItemMainhand() != ItemStack.EMPTY && Helper.doesItemHaveEnchantment(player.getHeldItemMainhand(), soulRipEnchantment)) {
+			if(player.getHeldItemMainhand() != ItemStack.EMPTY && Helper.doesItemHaveEnchantment(player.getHeldItemMainhand(), ModEnchantments.soulRipEnchantment)) {
 				double chance = Math.random();
 				if(chance < (MoreGadgets.proxy.getServerConfig().percentageDropSoulPiece / 100.0))
 					event.getEntity().dropItem(ModItems.soulFragment, 1);
@@ -59,12 +50,35 @@ public class SoulRipEnchantment extends Enchantment{
 		}
 	}
 	
+	@Override
+	public String getName() {
+
+		return "enchantment.moregadgets.soul_rip";
+	}
+	
+	@Override
+	public boolean isAllowedOnBooks() {
+
+		return true;
+	}
+	
+    public int getMinEnchantability(int enchantmentLevel)
+    {
+        return 1 + enchantmentLevel * 1000;
+    }
+
+    public int getMaxEnchantability(int enchantmentLevel)
+    {
+        return this.getMinEnchantability(enchantmentLevel) + 5000;
+    }
+	
+	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void onToolTipEvent(ItemTooltipEvent event) {
-		if(!Helper.doesItemHaveEnchantment(event.getItemStack(), soulRipEnchantment))
+		if(!Helper.doesItemHaveEnchantment(event.getItemStack(), ModEnchantments.soulRipEnchantment))
 			return;
-		int soulripLocation = event.getToolTip().indexOf(soulRipEnchantment.getTranslatedName(1));
+		int soulripLocation = event.getToolTip().indexOf(ModEnchantments.soulRipEnchantment.getTranslatedName(1));
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
 			event.getToolTip().add((soulripLocation+1),I18n.format("tooltips.moregadgets:items.soulrip", MoreGadgets.proxy.getServerConfig().percentageDropSoulPiece));
 		else

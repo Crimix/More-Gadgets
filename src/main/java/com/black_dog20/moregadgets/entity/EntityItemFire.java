@@ -2,9 +2,7 @@ package com.black_dog20.moregadgets.entity;
 
 import javax.annotation.Nonnull;
 
-import com.black_dog20.moregadgets.handler.enchanments.SoulRipEnchantment;
 import com.black_dog20.moregadgets.init.recipehandlers.FireRecipes;
-import com.black_dog20.moregadgets.utility.Helper;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;

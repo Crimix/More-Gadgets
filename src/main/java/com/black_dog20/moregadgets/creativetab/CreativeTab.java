@@ -1,6 +1,6 @@
 package com.black_dog20.moregadgets.creativetab;
 
-import com.black_dog20.moregadgets.handler.enchanments.SoulRipEnchantment;
+import com.black_dog20.moregadgets.init.ModEnchantments;
 import com.black_dog20.moregadgets.init.ModItems;
 import com.black_dog20.moregadgets.reference.Reference;
 
@@ -27,7 +27,7 @@ public class CreativeTab{
 		@Override
 		public void displayAllRelevantItems(NonNullList<ItemStack> list) {
 			super.displayAllRelevantItems(list);
-			list.add(ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(SoulRipEnchantment.soulRipEnchantment, 1)));
+			list.add(ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(ModEnchantments.soulRipEnchantment, 1)));
 		}
 		
 	});
