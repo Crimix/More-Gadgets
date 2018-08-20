@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "b b",
+    "w w",
+    "www"
+  ],
+  "key": {
+    "b": {
+      "item": "moregadgets:burnt_dust"
+    },
+    "w": {
+      "type": "forge:ore_dict",
+      "ore": "ingotGold"
+    }
+  },
+  "result": {
+    "item": "moregadgets:gold_horseshoe"
+  }
+}

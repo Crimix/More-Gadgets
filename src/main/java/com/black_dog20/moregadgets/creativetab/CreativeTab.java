@@ -16,7 +16,7 @@ public class CreativeTab{
 
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(ModItems.diamondRebreather);
+			return new ItemStack(ModItems.ironHorseshoe);
 		}
 
 		@Override

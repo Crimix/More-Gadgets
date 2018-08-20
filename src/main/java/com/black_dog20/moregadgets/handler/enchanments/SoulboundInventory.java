@@ -110,6 +110,8 @@ public class SoulboundInventory {
         this.offHandInventory.clear();
 
         NBTTagList nbtTagListIn = (NBTTagList) NBTHelper.getPlayerNBT(player).getTag(NBTTags.SOUL_INVENTORY);
+        if(nbtTagListIn == null)
+        	return;
         
         for (int i = 0; i < nbtTagListIn.tagCount(); ++i)
         {

@@ -1,5 +1,5 @@
 //Items
-item.moregadgets:blue_dust.name=Burnt Lapis Dust
+item.moregadgets:burnt_dust.name=Burnt Lapis Dust
 item.moregadgets:air_filter.name=Air Filter
 item.moregadgets:wooden_rebreather.name=Wooden Rebreather
 item.moregadgets:stone_rebreather.name=Stone Rebreather
@@ -12,6 +12,12 @@ item.moregadgets:ender_bread.name=Ender Dragon Bread
 item.moregadgets:soul_binder.name=Soul Binder
 item.moregadgets:soul_fragment.name=Fragment of a Soul
 item.moregadgets:unfired_soul_book.name=Incomplete Soul Ripping Book
+item.moregadgets:wooden_horseshoe.name=Wooden Lucky Horseshoe
+item.moregadgets:stone_horseshoe.name=Stone Lucky Horseshoe
+item.moregadgets:iron_horseshoe.name=Iron Lucky Horseshoe
+item.moregadgets:gold_horseshoe.name=Gold Lucky Horseshoe
+item.moregadgets:diamond_horseshoe.name=Diamond Lucky Horseshoe
+item.moregadgets:emerald_horseshoe.name=Emerald Lucky Horseshoe
 
 //Item tools
 
@@ -26,6 +32,10 @@ tooltips.moregadgets:healthfood.cannot_gain=You cannot gain more max hp
 tooltips.moregadgets:healthfood.heal=Heals: §c%d§r
 tooltips.moregadgets:soulFragment.drop=Dropped by mobs killed with the §d%s§7 enchantment
 tooltips.moregadgets:blue_dust.create=Created by throwing §9%s§7 into fire.
+tooltips.moregadgets:horseshoe.tips=Avoids death and gives the player health.
+tooltips.moregadgets:horseshoe.health=Health given: %d
+tooltips.moregadgets:horseshoe.cooldown=Cooldown: %ds
+tooltips.moregadgets:unfired_soul_book.drop=Throw into fire to get a enchanted %s§7 book
 
 //Info Items
 item.moregadgets:soul_fragment.info=Sometimes dropped by monsters killed with a weapon enchanted with the §dSoul Ripping§r enchantment.
@@ -35,6 +45,9 @@ item.moregadgets:soul_fragment.info2=Used for items that have an impact on the s
 
 //Enchantments
 enchantment.moregadgets.soul_rip=§dSoul Ripping
+
+//Potions
+luckyHorseshoeCooldown=Cooldown
 
 //Entities
 

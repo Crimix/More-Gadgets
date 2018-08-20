@@ -27,7 +27,7 @@ public class FireRecipeCategory implements IRecipeCategory<FireRecipeWrapper> {
 	public FireRecipeCategory(IGuiHelper guiHelper) {
 		ResourceLocation gui = new ResourceLocation("moregadgets:textures/gui/fire_recipe.png");
 		
-		icon = guiHelper.createDrawable(gui, 77, 64, 15, 14);
+		icon = guiHelper.createDrawable(gui, 176, 0, 15, 14);
 		background = guiHelper.createDrawable(gui, 72, 17, 67, 64);
 		localizedName = I18n.format("container.moregadgets.fire");
 	}

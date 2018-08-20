@@ -49,6 +49,13 @@ public class Recipes {
 		toJSON.addShapedRecipe(ModItems.goldRebreather, new Object[]{" w ","waw", "www", 'w', "ingotGold", 'a', ModItems.airFilter});
 		toJSON.addShapedRecipe(ModItems.diamondRebreather, new Object[]{" w ","waw", "www", 'w', "gemDiamond", 'a', ModItems.airFilter});
 		toJSON.addShapedRecipe(ModItems.emeraldRebreather, new Object[]{" w ","waw", "www", 'w', "gemEmerald", 'a', ModItems.airFilter});
+		
+		toJSON.addShapedRecipe(ModItems.woodenHorseshoe, new Object[]{"b b","w w", "www", 'w', "logWood", 'b', ModItems.blueDust});
+		toJSON.addShapedRecipe(ModItems.stoneHorseshoe, new Object[]{"b b","w w", "www", 'w', "stone", 'b', ModItems.blueDust});
+		toJSON.addShapedRecipe(ModItems.ironHorseshoe, new Object[]{"b b","w w", "www", 'w', "ingotIron", 'b', ModItems.blueDust});
+		toJSON.addShapedRecipe(ModItems.goldHorseshoe, new Object[]{"b b","w w", "www", 'w', "ingotGold", 'b', ModItems.blueDust});
+		toJSON.addShapedRecipe(ModItems.diamondHorseshoe, new Object[]{"b b","w w", "www", 'w', "gemDiamond", 'b', ModItems.blueDust});
+		toJSON.addShapedRecipe(ModItems.emeraldHorseshoe, new Object[]{"b b","w w", "www", 'w', "gemEmerald", 'b', ModItems.blueDust});
 	}
 
 }
