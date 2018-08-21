@@ -59,8 +59,6 @@ public class SoulBoundHandler {
 			if(event.isCanceled())
 				return;
 			SoulboundInventory soul = new SoulboundInventory(player);
-			if(event.isCanceled())
-				return;
 			soul.writeToNBT();
 		}
 	}
@@ -71,19 +69,21 @@ public class SoulBoundHandler {
 			return;
 		}
 		EntityPlayer player = event.getEntityPlayer();
-		
+				
 		if (player.world.getGameRules().getBoolean("keepInventory")) {
 			return;
 		}
 
+		SoulboundInventory soul = SoulboundInventory.GetForPlayer(player);
 		ListIterator<EntityItem> iter = event.getDrops().listIterator();
 		while (iter.hasNext()) {
 			EntityItem ei = iter.next();
 			ItemStack item = ei.getItem();
-			if (isStackSoulBound(item)) {
+			if (isStackSoulBound(item) && soul.addItemStackToInventory(item)) {
 				iter.remove();
 			}
 		}
+		soul.writeToNBT();
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -106,6 +106,7 @@ public class SoulBoundHandler {
 				iter.remove();
 			}
 		}
+		soul.writeToNBT();
 	}
 
 
@@ -126,8 +127,7 @@ public class SoulBoundHandler {
 		if (original == player || original.inventory == player.inventory || (original.inventory.armorInventory == player.inventory.armorInventory && original.inventory.mainInventory == player.inventory.mainInventory))
 			return;
 
-		SoulboundInventory soul = new SoulboundInventory(player);
-		soul.readFromNBT();
+		SoulboundInventory soul = SoulboundInventory.GetForPlayer(player);
 
 		for (int i = 0; i < soul.armorInventory.size(); i++) {
 			ItemStack item = soul.armorInventory.get(i);
@@ -184,8 +184,7 @@ public class SoulBoundHandler {
 		if (original == player || original.inventory == player.inventory || (original.inventory.armorInventory == player.inventory.armorInventory && original.inventory.mainInventory == player.inventory.mainInventory))
 			return;
 
-		SoulboundInventory soul = new SoulboundInventory(player);
-		soul.readFromNBT();
+		SoulboundInventory soul = SoulboundInventory.GetForPlayer(player);
 
 		for (int i = 0; i < soul.armorInventory.size(); i++) {
 			ItemStack item = soul.armorInventory.get(i);

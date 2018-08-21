@@ -47,8 +47,8 @@ public class SoulboundInventory {
 			readFromNBT();
 		}
 		else {
-			copyArmor();
 			copyMain();
+			copyArmor();
 			copyOffHand();
 			if(Loader.isModLoaded("baubles"))
 				copyBaubles();
@@ -68,40 +68,49 @@ public class SoulboundInventory {
 	private void copyMain() {
 		NonNullList<ItemStack> old = player.inventory.mainInventory;
 		for(int i = 0; i < old.size(); i++) {
-			if(NBTHelper.doesItemStackHaveTag(old.get(i), NBTTags.SOULBOUND))
-				mainInventory.set(i, old.get(i));
+			if(NBTHelper.doesItemStackHaveTag(old.get(i), NBTTags.SOULBOUND)) {
+				this.mainInventory.set(i, old.get(i).copy());
+				old.get(i).setCount(0);
+			}
 		}
 	}
 
 	private void copyArmor() {
 		NonNullList<ItemStack> old = player.inventory.armorInventory;
 		for(int i = 0; i < old.size(); i++) {
-			if(NBTHelper.doesItemStackHaveTag(old.get(i), NBTTags.SOULBOUND))
-				armorInventory.set(i, old.get(i));
+			if(NBTHelper.doesItemStackHaveTag(old.get(i), NBTTags.SOULBOUND)) {
+				this.armorInventory.set(i, old.get(i).copy());
+				old.get(i).setCount(0);
+			}
 		}
 	}
 
 	private void copyOffHand() {
 		NonNullList<ItemStack> old = player.inventory.offHandInventory;
 		for(int i = 0; i < old.size(); i++) {
-			if(NBTHelper.doesItemStackHaveTag(old.get(i), NBTTags.SOULBOUND))
-				offHandInventory.set(i, old.get(i));
+			if(NBTHelper.doesItemStackHaveTag(old.get(i), NBTTags.SOULBOUND)) {
+				this.offHandInventory.set(i, old.get(i));
+				old.get(i).setCount(0);
+			}
 		}
 	}
 
 	private void copyBaubles() {
 		IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
 		for(int i = 0; i < baubles.getSlots(); i++) {
-			if(NBTHelper.doesItemStackHaveTag(baubles.getStackInSlot(i), NBTTags.SOULBOUND))
-				baublesInventory.set(i, baubles.getStackInSlot(i));
+			if(NBTHelper.doesItemStackHaveTag(baubles.getStackInSlot(i), NBTTags.SOULBOUND)) {
+				baublesInventory.set(i, baubles.getStackInSlot(i).copy());
+				baubles.setStackInSlot(i, ItemStack.EMPTY);
+			}
 		}
 	}
 	
 	private void copyGalacticraft() {
 		IInventory galacticraft = GalacticraftIntergration.getInventory(player);
 		for(int i = 0; i < galacticraft.getSizeInventory(); i++) {
-			if(NBTHelper.doesItemStackHaveTag(galacticraft.getStackInSlot(i), NBTTags.SOULBOUND))
-				galacticraftInventory.set(i, galacticraft.getStackInSlot(i));
+			if(NBTHelper.doesItemStackHaveTag(galacticraft.getStackInSlot(i), NBTTags.SOULBOUND)) {
+				galacticraftInventory.set(i, galacticraft.removeStackFromSlot(i));
+			}
 		}
 	}
 
