@@ -4,6 +4,7 @@ import java.util.ListIterator;
 
 import javax.annotation.Nonnull;
 
+import com.black_dog20.moregadgets.intergration.galacticraft.GalacticraftIntergration;
 import com.black_dog20.moregadgets.reference.NBTTags;
 import com.black_dog20.moregadgets.reference.Reference;
 import com.black_dog20.moregadgets.utility.NBTHelper;
@@ -13,6 +14,7 @@ import baubles.api.cap.IBaublesItemHandler;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -229,10 +231,25 @@ public class SoulBoundHandler {
 				ItemStack rest = baubles.insertItem(i, item, false);
 				if (rest == ItemStack.EMPTY) {
 					soul.baublesInventory.set(i, ItemStack.EMPTY);
-				}
-				else {
+				} else {
 					if(player.inventory.addItemStackToInventory(rest) || tryToSpawnEntityItemAtPlayer(original, rest))
 						soul.baublesInventory.set(i, ItemStack.EMPTY);
+				}
+			}
+		}
+		
+		
+		/* Needs to be done here */
+		if(GalacticraftIntergration.getInventory(player) != null) {
+			IInventory galacticraft = GalacticraftIntergration.getInventory(player);
+			for (int i = 0; i < soul.galacticraftInventory.size(); i++) {
+				ItemStack item = soul.galacticraftInventory.get(i);
+				if(galacticraft.getStackInSlot(i).isEmpty()) {
+					galacticraft.setInventorySlotContents(i, item);
+					soul.galacticraftInventory.set(i, ItemStack.EMPTY);
+				} else {
+					if(player.inventory.addItemStackToInventory(item) || tryToSpawnEntityItemAtPlayer(original, item))
+						soul.galacticraftInventory.set(i, ItemStack.EMPTY);
 				}
 			}
 		}

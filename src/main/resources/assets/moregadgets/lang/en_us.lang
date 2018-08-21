@@ -40,6 +40,9 @@ tooltips.moregadgets:unfired_soul_book.drop=Throw into fire to get a enchanted %
 //Info Items
 item.moregadgets:soul_fragment.info=Sometimes dropped by monsters killed with a weapon enchanted with the §dSoul Ripping§r enchantment.
 item.moregadgets:soul_fragment.info2=Used for items that have an impact on the soul.
+item.moregadgets:soul_binder.info=Prevents the item from dropping upon death. It will follow you through death.
+item.moregadgets:soul_binder.info2=Current supported inventories are:\n - Main player inventory\n - Offhand\n - Armor\n - Baubles\n - Galacticraft
+item.moregadgets:soul_binder.info3=All other inventories will add the soulbound items to the main player inventory, or if that is full, drop them on the ground where you died.
 
 //Blocks
 

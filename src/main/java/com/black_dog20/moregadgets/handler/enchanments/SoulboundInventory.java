@@ -1,11 +1,13 @@
 package com.black_dog20.moregadgets.handler.enchanments;
 
+import com.black_dog20.moregadgets.intergration.galacticraft.GalacticraftIntergration;
 import com.black_dog20.moregadgets.reference.NBTTags;
 import com.black_dog20.moregadgets.utility.NBTHelper;
 
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -18,6 +20,7 @@ public class SoulboundInventory {
 	public final NonNullList<ItemStack> armorInventory;
 	public final NonNullList<ItemStack> offHandInventory;
 	public final NonNullList<ItemStack> baublesInventory;
+	public final NonNullList<ItemStack> galacticraftInventory;
 	public final EntityPlayer player;
 
 	private SoulboundInventory(EntityPlayer player, boolean load) {
@@ -25,34 +28,37 @@ public class SoulboundInventory {
 		this.mainInventory = NonNullList.<ItemStack>withSize(player.inventory.mainInventory.size(), ItemStack.EMPTY);
 		this.armorInventory = NonNullList.<ItemStack>withSize(player.inventory.armorInventory.size(), ItemStack.EMPTY);
 		this.offHandInventory = NonNullList.<ItemStack>withSize(player.inventory.offHandInventory.size(), ItemStack.EMPTY);
+		
 		if(Loader.isModLoaded("baubles")) {
 			IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
 			this.baublesInventory = NonNullList.<ItemStack>withSize(baubles.getSlots(), ItemStack.EMPTY);
 		} else {
 			this.baublesInventory = NonNullList.<ItemStack>withSize(1,ItemStack.EMPTY);
 		}
-
-		if(load)
+		
+		IInventory galacticraft = GalacticraftIntergration.getInventory(player);
+		if(galacticraft != null) {
+			this.galacticraftInventory = NonNullList.<ItemStack>withSize(galacticraft.getSizeInventory(), ItemStack.EMPTY);
+		} else {
+			this.galacticraftInventory = NonNullList.<ItemStack>withSize(1,ItemStack.EMPTY);
+		}
+		
+		if(load) {
 			readFromNBT();
+		}
+		else {
+			copyArmor();
+			copyMain();
+			copyOffHand();
+			if(Loader.isModLoaded("baubles"))
+				copyBaubles();
+			if(galacticraft != null)
+				copyGalacticraft();
+		}
 	}
 
 	public SoulboundInventory(EntityPlayer player) {
-		this.player = player;
-		this.mainInventory = NonNullList.<ItemStack>withSize(player.inventory.mainInventory.size(), ItemStack.EMPTY);
-		this.armorInventory = NonNullList.<ItemStack>withSize(player.inventory.armorInventory.size(), ItemStack.EMPTY);
-		this.offHandInventory = NonNullList.<ItemStack>withSize(player.inventory.offHandInventory.size(), ItemStack.EMPTY);
-		if(Loader.isModLoaded("baubles")) {
-			IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
-			this.baublesInventory = NonNullList.<ItemStack>withSize(baubles.getSlots(), ItemStack.EMPTY);
-		} else {
-			this.baublesInventory = NonNullList.<ItemStack>withSize(1,ItemStack.EMPTY);
-		}
-
-		copyArmor();
-		copyMain();
-		copyOffHand();
-		if(Loader.isModLoaded("baubles"))
-			copyBaubles();
+		this(player, false);
 	}
 
 	public static SoulboundInventory GetForPlayer(EntityPlayer player) {
@@ -88,6 +94,14 @@ public class SoulboundInventory {
 		for(int i = 0; i < baubles.getSlots(); i++) {
 			if(NBTHelper.doesItemStackHaveTag(baubles.getStackInSlot(i), NBTTags.SOULBOUND))
 				baublesInventory.set(i, baubles.getStackInSlot(i));
+		}
+	}
+	
+	private void copyGalacticraft() {
+		IInventory galacticraft = GalacticraftIntergration.getInventory(player);
+		for(int i = 0; i < galacticraft.getSizeInventory(); i++) {
+			if(NBTHelper.doesItemStackHaveTag(galacticraft.getStackInSlot(i), NBTTags.SOULBOUND))
+				galacticraftInventory.set(i, galacticraft.getStackInSlot(i));
 		}
 	}
 
@@ -140,9 +154,22 @@ public class SoulboundInventory {
 			}
 		}
 
+		NBTTagList galacticraftList = new NBTTagList();
+
+		for (int l = 0; l < this.galacticraftInventory.size(); ++l)
+		{
+			if (!((ItemStack)this.galacticraftInventory.get(l)).isEmpty())
+			{
+				NBTTagCompound nbttagcompound2 = new NBTTagCompound();
+				nbttagcompound2.setByte("Slot", (byte)(l));
+				((ItemStack)this.galacticraftInventory.get(l)).writeToNBT(nbttagcompound2);
+				galacticraftList.appendTag(nbttagcompound2);
+			}
+		}
 
 		NBTHelper.getPlayerNBT(player).setTag(NBTTags.SOUL_INVENTORY, nbtTagListIn);
 		NBTHelper.getPlayerNBT(player).setTag(NBTTags.SOUL_INVENTORY + "_baubles", baublesList);
+		NBTHelper.getPlayerNBT(player).setTag(NBTTags.SOUL_INVENTORY + "_galacticraft", galacticraftList);
 	}
 
 	public void readFromNBT()
@@ -193,6 +220,21 @@ public class SoulboundInventory {
 				}
 			}
 		}
+		
+		NBTTagList galacticraftList = (NBTTagList) NBTHelper.getPlayerNBT(player).getTag(NBTTags.SOUL_INVENTORY + "_galacticraft");
+		if(galacticraftList != null) {
+			for (int i = 0; i < galacticraftList.tagCount(); ++i)
+			{
+				NBTTagCompound nbttagcompound = galacticraftList.getCompoundTagAt(i);
+				int j = nbttagcompound.getByte("Slot") & 255;
+				ItemStack itemstack = new ItemStack(nbttagcompound);
+
+				if (!itemstack.isEmpty())
+				{
+					this.galacticraftInventory.set(j, itemstack);	
+				}
+			}
+		}
 
 	}
 
@@ -200,6 +242,7 @@ public class SoulboundInventory {
 	public void clear() {
 		NBTHelper.getPlayerNBT(player).removeTag(NBTTags.SOUL_INVENTORY);
 		NBTHelper.getPlayerNBT(player).removeTag(NBTTags.SOUL_INVENTORY + "_baubles");
+		NBTHelper.getPlayerNBT(player).removeTag(NBTTags.SOUL_INVENTORY + "_galacticraft");
 	}
 
 	public boolean addItemStackToInventory(ItemStack stack)
