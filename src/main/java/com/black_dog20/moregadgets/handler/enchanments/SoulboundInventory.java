@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.common.Loader;
 
 public class SoulboundInventory {
 
@@ -24,8 +25,12 @@ public class SoulboundInventory {
 		this.mainInventory = NonNullList.<ItemStack>withSize(player.inventory.mainInventory.size(), ItemStack.EMPTY);
 		this.armorInventory = NonNullList.<ItemStack>withSize(player.inventory.armorInventory.size(), ItemStack.EMPTY);
 		this.offHandInventory = NonNullList.<ItemStack>withSize(player.inventory.offHandInventory.size(), ItemStack.EMPTY);
-		IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
-		this.baublesInventory = NonNullList.<ItemStack>withSize(baubles.getSlots(), ItemStack.EMPTY);
+		if(Loader.isModLoaded("baubles")) {
+			IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
+			this.baublesInventory = NonNullList.<ItemStack>withSize(baubles.getSlots(), ItemStack.EMPTY);
+		} else {
+			this.baublesInventory = NonNullList.<ItemStack>withSize(1,ItemStack.EMPTY);
+		}
 
 		if(load)
 			readFromNBT();
@@ -36,13 +41,18 @@ public class SoulboundInventory {
 		this.mainInventory = NonNullList.<ItemStack>withSize(player.inventory.mainInventory.size(), ItemStack.EMPTY);
 		this.armorInventory = NonNullList.<ItemStack>withSize(player.inventory.armorInventory.size(), ItemStack.EMPTY);
 		this.offHandInventory = NonNullList.<ItemStack>withSize(player.inventory.offHandInventory.size(), ItemStack.EMPTY);
-		IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
-		this.baublesInventory = NonNullList.<ItemStack>withSize(baubles.getSlots(), ItemStack.EMPTY);
+		if(Loader.isModLoaded("baubles")) {
+			IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
+			this.baublesInventory = NonNullList.<ItemStack>withSize(baubles.getSlots(), ItemStack.EMPTY);
+		} else {
+			this.baublesInventory = NonNullList.<ItemStack>withSize(1,ItemStack.EMPTY);
+		}
 
 		copyArmor();
 		copyMain();
 		copyOffHand();
-		copyBaubles();
+		if(Loader.isModLoaded("baubles"))
+			copyBaubles();
 	}
 
 	public static SoulboundInventory GetForPlayer(EntityPlayer player) {

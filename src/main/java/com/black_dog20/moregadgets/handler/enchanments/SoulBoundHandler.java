@@ -14,11 +14,14 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -219,17 +222,20 @@ public class SoulBoundHandler {
 			}
 		}
 		
+		
 		/* Needs to be done here, else it will not sync a.k.a the items are destroyed */
-		IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
-		for (int i = 0; i < soul.baublesInventory.size(); i++) {
-			ItemStack item = soul.baublesInventory.get(i);
-			ItemStack rest = baubles.insertItem(i, item, false);
-			if (rest == ItemStack.EMPTY) {
-				soul.baublesInventory.set(i, ItemStack.EMPTY);
-			}
-			else {
-				if(player.inventory.addItemStackToInventory(rest) || tryToSpawnEntityItemAtPlayer(original, rest))
+		if(Loader.isModLoaded("baubles")) {
+			IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
+			for (int i = 0; i < soul.baublesInventory.size(); i++) {
+				ItemStack item = soul.baublesInventory.get(i);
+				ItemStack rest = baubles.insertItem(i, item, false);
+				if (rest == ItemStack.EMPTY) {
 					soul.baublesInventory.set(i, ItemStack.EMPTY);
+				}
+				else {
+					if(player.inventory.addItemStackToInventory(rest) || tryToSpawnEntityItemAtPlayer(original, rest))
+						soul.baublesInventory.set(i, ItemStack.EMPTY);
+				}
 			}
 		}
 		
