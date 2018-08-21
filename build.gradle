@@ -119,8 +119,7 @@ task deobfJar(type: Jar) {
 /*curseforge {
   apiKey = priv.apiKey
   project {
-  	addArtifact (deobfJar)
-    id = '289733'
+    id = '301348'
     changelogType = 'markdown'
 	changelog = file('changelog.txt')
     releaseType = 'release'
