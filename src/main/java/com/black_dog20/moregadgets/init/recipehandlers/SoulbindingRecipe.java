@@ -58,7 +58,13 @@ public class SoulbindingRecipe implements IRecipe {
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
 	{
+		inv.clear();
 		return NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+	}
+	
+	@Override
+	public boolean isDynamic() {
+		return true;
 	}
 
 	@Override
@@ -92,7 +98,6 @@ public class SoulbindingRecipe implements IRecipe {
 		}
 		NBTTagCompound nbt = result.getTagCompound();
 		nbt.setBoolean(NBTTags.SOULBOUND, true);
-
 		return result;
 	}
 

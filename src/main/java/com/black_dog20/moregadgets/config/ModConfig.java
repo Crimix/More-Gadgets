@@ -21,7 +21,7 @@ public class ModConfig {
 	public static class Client{
 		
 		@Config.LangKey("config.moregadgets.useCustomHealthBar")
-		public boolean useCustomHealthBar = true;
+		public boolean useCustomHealthBar = false;
 		
 	}
 	

@@ -8,6 +8,8 @@ import com.black_dog20.moregadgets.reference.NBTTags;
 import com.black_dog20.moregadgets.reference.Reference;
 import com.black_dog20.moregadgets.utility.NBTHelper;
 
+import baubles.api.BaublesApi;
+import baubles.api.cap.IBaublesItemHandler;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +40,11 @@ public class SoulBoundHandler {
 	public static void onToolTipEvent(ItemTooltipEvent event) {
 		if(event.getItemStack().getTagCompound() == null || !event.getItemStack().getTagCompound().hasKey(NBTTags.SOULBOUND))
 			return;
-		event.getToolTip().add(I18n.format("tooltips.moregadgets:items.soulbound"));
+		int place = event.getToolTip().indexOf("");
+		if(place != -1)
+			event.getToolTip().add(place, I18n.format("tooltips.moregadgets:items.soulbound"));
+		else
+			event.getToolTip().add(I18n.format("tooltips.moregadgets:items.soulbound"));
 	}
 	
 	@SubscribeEvent(priority=EventPriority.LOWEST)
@@ -75,8 +81,6 @@ public class SoulBoundHandler {
 				iter.remove();
 			}
 		}
-		
-		//Missing the handling of bauble and the likes
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -112,6 +116,7 @@ public class SoulBoundHandler {
 		
 		EntityPlayer player = event.getEntityPlayer();
 		EntityPlayer original = event.getOriginal();
+		
 		if (player.world.getGameRules().getBoolean("keepInventory"))
 			return;
 
@@ -155,6 +160,9 @@ public class SoulBoundHandler {
 					soul.offHandInventory.set(i, ItemStack.EMPTY);
 			}
 		}
+		
+		soul.writeToNBT();
+		
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -208,6 +216,20 @@ public class SoulBoundHandler {
 			else {
 				if(player.inventory.addItemStackToInventory(item) || tryToSpawnEntityItemAtPlayer(original, item))
 					soul.offHandInventory.set(i, ItemStack.EMPTY);
+			}
+		}
+		
+		/* Needs to be done here, else it will not sync a.k.a the items are destroyed */
+		IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
+		for (int i = 0; i < soul.baublesInventory.size(); i++) {
+			ItemStack item = soul.baublesInventory.get(i);
+			ItemStack rest = baubles.insertItem(i, item, false);
+			if (rest == ItemStack.EMPTY) {
+				soul.baublesInventory.set(i, ItemStack.EMPTY);
+			}
+			else {
+				if(player.inventory.addItemStackToInventory(rest) || tryToSpawnEntityItemAtPlayer(original, rest))
+					soul.baublesInventory.set(i, ItemStack.EMPTY);
 			}
 		}
 		

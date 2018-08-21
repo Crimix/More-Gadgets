@@ -2,6 +2,7 @@ package com.black_dog20.moregadgets.client.gui;
 
 import java.util.Random;
 
+import com.black_dog20.moregadgets.config.ModConfig;
 import com.black_dog20.moregadgets.reference.Reference;
 
 import net.minecraft.client.Minecraft;
@@ -96,11 +97,36 @@ public class GuiHealth extends Gui {
 			int i2 = Math.max(10 - (l1 - 2), 3);
 			int l2 = k1;
 			int j3 = -1;
+			int j2 = j1 - (l1 - 1) - 10;
+            int i3 = entityplayer.getTotalArmorValue();
 
 			if (entityplayer.isPotionActive(MobEffects.REGENERATION))
 			{
 				j3 = this.updateCounter % MathHelper.ceil(f + 5.0F);
 			}
+			
+            for (int k3 = 0; k3 < 10; ++k3)
+            {
+                if (i3 > 0)
+                {
+                    int l3 = l + k3 * 8;
+
+                    if (k3 * 2 + 1 < i3)
+                    {
+                        this.drawTexturedModalRect(l3, j2, 34, 9, 9, 9);
+                    }
+
+                    if (k3 * 2 + 1 == i3)
+                    {
+                        this.drawTexturedModalRect(l3, j2, 25, 9, 9, 9);
+                    }
+
+                    if (k3 * 2 + 1 > i3)
+                    {
+                        this.drawTexturedModalRect(l3, j2, 16, 9, 9, 9);
+                    }
+                }
+            }
 
 			for (int j5 = 0; j5 <= MathHelper.ceil((f + (float)k1) / 2.0F) - 1; ++j5)
 			{
@@ -244,6 +270,11 @@ public class GuiHealth extends Gui {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onRender(RenderGameOverlayEvent.Pre event) {
+		if(!ModConfig.client.useCustomHealthBar)
+			return;
+		if(event.getType() == ElementType.ARMOR)
+			event.setCanceled(true);
+			
 		if(event.getType() == ElementType.HEALTH) {
 			if(((EntityPlayer)this.mc.getRenderViewEntity()).getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue() <= 100) {
 				if (!mc.gameSettings.hideGUI || mc.currentScreen != null)
