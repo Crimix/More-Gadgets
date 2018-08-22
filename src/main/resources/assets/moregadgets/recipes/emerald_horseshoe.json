@@ -2,12 +2,15 @@
   "type": "forge:ore_shaped",
   "pattern": [
     "b b",
-    "w w",
+    "wsw",
     "www"
   ],
   "key": {
     "b": {
       "item": "moregadgets:burnt_dust"
+    },
+    "s": {
+      "item": "minecraft:nether_star"
     },
     "w": {
       "type": "forge:ore_dict",

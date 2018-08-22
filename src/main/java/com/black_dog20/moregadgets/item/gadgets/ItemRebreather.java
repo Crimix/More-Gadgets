@@ -53,7 +53,6 @@ public class ItemRebreather extends ItemBase{
 				if(tick%material.getEfficiency() == 0) {
 					nbt.setInteger("rebreatherAir", player.getAir());
 					tick = 1;
-					System.out.println("dmg");
 					findTier(player).damageItem(1, player);
 				}
 				else {
@@ -85,10 +84,13 @@ public class ItemRebreather extends ItemBase{
 		if (event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 			if (hasRebreather(player) && player.isInsideOfMaterial(Material.WATER)) {
-				if(player.onGround)
-					event.setNewSpeed(event.getOriginalSpeed()*5);
-				else
-					event.setNewSpeed(event.getOriginalSpeed()*25);
+				ItemStack tool = player.getHeldItemMainhand();
+				float toolSpeed = tool == null ? 1.0F : tool.getItem().getDestroySpeed(tool, event.getState());
+				if(toolSpeed > event.getOriginalSpeed())
+					if(player.onGround)
+						event.setNewSpeed(event.getOriginalSpeed()*5);
+					else
+						event.setNewSpeed(event.getOriginalSpeed()*25);
 			}
 		}
 	}

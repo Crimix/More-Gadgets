@@ -50,7 +50,7 @@ public class SoulBoundHandler {
 			event.getToolTip().add(I18n.format("tooltips.moregadgets:items.soulbound"));
 	}
 	
-	@SubscribeEvent(priority=EventPriority.LOWEST)
+	@SubscribeEvent(priority=EventPriority.LOW)
 	public static void onPlayerDeath(LivingDeathEvent event) {
 		if(event.getEntity() != null && event.getEntity() instanceof EntityPlayer && !(event.getEntity() instanceof FakePlayer)) {
 			EntityPlayer player = (EntityPlayer) event.getEntity();
@@ -86,8 +86,31 @@ public class SoulBoundHandler {
 		soul.writeToNBT();
 	}
 	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public static void onPlayerDropLate(PlayerDropsEvent event) {
+		if (event.getEntityPlayer() == null || event.getEntityPlayer() instanceof FakePlayer || event.isCanceled()) {
+			return;
+		}
+		EntityPlayer player = event.getEntityPlayer();
+		
+		if (player.world.getGameRules().getBoolean("keepInventory")) {
+			return;
+		}
+
+		SoulboundInventory soul = SoulboundInventory.GetForPlayer(player);
+		ListIterator<EntityItem> iter = event.getDrops().listIterator();
+		while (iter.hasNext()) {
+			EntityItem ei = iter.next();
+			ItemStack item = ei.getItem();
+			if (isStackSoulBound(item) && soul.addItemStackToInventory(item)) {
+				iter.remove();
+			}
+		}
+		soul.writeToNBT();
+	}
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public static void onPlayerDropLater(PlayerDropsEvent event) {
 		if (event.getEntityPlayer() == null || event.getEntityPlayer() instanceof FakePlayer || event.isCanceled()) {
 			return;
 		}
