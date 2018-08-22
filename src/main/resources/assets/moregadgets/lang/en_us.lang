@@ -69,7 +69,7 @@ config.moregadgets.client=Client
 config.moregadgets.useCustomHealthBar=Use the custom health bar
 
 //Configs server
-config.moregadgets.percentageDropSoulPiece=Soul Piece drop chance percentage
+config.moregadgets.percentageDropSoulPiece=Soul fragment drop chance
 
 //Keys
 

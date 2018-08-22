@@ -1,7 +1,7 @@
 [
 {
-  "modid": "gadgetron",
-  "name": "Gadgetron",
+  "modid": "moregadgets",
+  "name": "More Gadgets",
   "description": "",
   "version": "${version}",
   "mcversion": "${mcversion}",

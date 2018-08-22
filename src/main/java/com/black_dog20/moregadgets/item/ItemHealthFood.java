@@ -12,6 +12,9 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemHealthFood extends ItemFoodBase {
 
@@ -24,6 +27,7 @@ public class ItemHealthFood extends ItemFoodBase {
 		this.maxHealthGained = maxHealthGained;
 		this.minHealth = minHealth;
 		this.setAlwaysEdible();
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 	
 	@Override
@@ -50,12 +54,30 @@ public class ItemHealthFood extends ItemFoodBase {
         
         tooltip.add(I18n.format("tooltips.moregadgets:healthfood.heal", this.getHealAmount(stack)));
         
+        if(healthModifier == null)
+        	healthModifier = new AttributeModifier(MORE_GADGETS_HEALTH,"MoreGadgetsHealth", 1, 0);
         if(minHealth <= healthModifier.getAmount() && healthModifier.getAmount() < minHealth + maxHealthGained)
         	tooltip.add(I18n.format("tooltips.moregadgets:healthfood.can_gain", 1, maxHealthGained));
         else if (healthModifier.getAmount() >= minHealth + maxHealthGained)
         	tooltip.add(I18n.format("tooltips.moregadgets:healthfood.cannot_gain"));
         else
         	tooltip.add(I18n.format("tooltips.moregadgets:healthfood.not_ready"));
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerCloneEvent(PlayerEvent.Clone event) {
+		if (!event.isWasDeath()) {
+			return;
+		}
+		IAttributeInstance oldHealth = event.getOriginal().getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+		IAttributeInstance health = event.getEntityPlayer().getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+
+		AttributeModifier oldHealthModifier = oldHealth.getModifier(ItemHealthFood.MORE_GADGETS_HEALTH);
+		if(oldHealthModifier != null) {
+			health.removeModifier(ItemHealthFood.MORE_GADGETS_HEALTH);
+			health.applyModifier(oldHealthModifier);
+			event.getEntityPlayer().setHealth(event.getEntityPlayer().getHealth() + (float)oldHealthModifier.getAmount());
 		}
 	}
 
