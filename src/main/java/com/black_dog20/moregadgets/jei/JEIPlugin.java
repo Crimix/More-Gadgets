@@ -38,9 +38,11 @@ public class JEIPlugin implements IModPlugin{
 
 	@Override
 	public void register(IModRegistry registry) {
+		String[] soulboundInventories = new String[] { "item.moregadgets:soul_binder.info2", "soulbound.support.main", "soulbound.support.offhand", "soulbound.support.armor", "soulbound.support.baubles", "soulbound.support.galacticraft" };
+		
 		registry.addIngredientInfo(new ItemStack(ModItems.soulFragment), ItemStack.class, "item.moregadgets:soul_fragment.info","item.moregadgets:soul_fragment.info2");
-		registry.addIngredientInfo(new ItemStack(ModItems.soulbinder), ItemStack.class, "item.moregadgets:soul_binder.info");
-		registry.addIngredientInfo(new ItemStack(ModItems.soulbinder), ItemStack.class, "item.moregadgets:soul_binder.info2");
+		registry.addIngredientInfo(new ItemStack(ModItems.soulbinder), ItemStack.class, "tooltips.moregadgets:soul_binder.use", "item.moregadgets:soul_binder.info");
+		registry.addIngredientInfo(new ItemStack(ModItems.soulbinder), ItemStack.class, soulboundInventories);
 		registry.addIngredientInfo(new ItemStack(ModItems.soulbinder), ItemStack.class, "item.moregadgets:soul_binder.info3");
 		
 		IJeiHelpers jeiHelper = registry.getJeiHelpers();

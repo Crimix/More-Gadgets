@@ -145,6 +145,7 @@ public class ItemRebreather extends ItemBase{
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		tooltip.add(I18n.format("tooltips.moregadgets:rebreather.efficiency", material.efficiency));
+		tooltip.add(I18n.format("tooltips.moregadgets:rebreather.improve"));
 	}
 	
 	public static enum RebreatherLevel
