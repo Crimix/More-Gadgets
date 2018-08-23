@@ -23,7 +23,7 @@ item.moregadgets:emerald_horseshoe.name=Emerald Lucky Horseshoe
 
 //Items tooltips
 tooltips.moregadgets:rebreather.efficiency=§bAir:§7 %dx
-tooltips.moregadgets:rebreather.improve=Improves sight & mining speed under water
+tooltips.moregadgets:rebreather.improve=Improves sight & mining speed underwater
 tooltips.moregadgets:items.soulbound=§dSoulbound§r
 tooltips.moregadgets:items.sneak=§8 - Press %s for more info§r
 tooltips.moregadgets:items.soulrip=§8 - %d%% chance to rip a piece of the soul from a dying enemy§r
