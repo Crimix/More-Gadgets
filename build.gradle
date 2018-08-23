@@ -116,7 +116,7 @@ task deobfJar(type: Jar) {
 }
 
 
-/*curseforge {
+curseforge {
   apiKey = priv.apiKey
   project {
     id = '301348'
@@ -128,7 +128,7 @@ task deobfJar(type: Jar) {
     addGameVersion '1.12.1'
     addGameVersion '1.12.2'
   }
-}*/
+}
 
 task clearChangelog() {
 	doLast{
