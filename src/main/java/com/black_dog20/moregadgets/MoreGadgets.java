@@ -27,6 +27,8 @@ public class MoreGadgets {
 
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
 	public static IProxy proxy;
+	
+	public static final int GUI_SHAPESHIFTER = 0;
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

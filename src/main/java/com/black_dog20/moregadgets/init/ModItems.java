@@ -5,6 +5,7 @@ import com.black_dog20.moregadgets.item.ItemHealthFood;
 import com.black_dog20.moregadgets.item.gadgets.ItemLuckyHorseshoe;
 import com.black_dog20.moregadgets.item.gadgets.ItemLuckyHorseshoe.HorseshoeLevel;
 import com.black_dog20.moregadgets.item.gadgets.ItemRebreather;
+import com.black_dog20.moregadgets.item.gadgets.ItemShapeShiftingToolBag;
 import com.black_dog20.moregadgets.item.gadgets.ItemRebreather.RebreatherLevel;
 import com.black_dog20.moregadgets.reference.Reference;
 
@@ -41,7 +42,7 @@ public class ModItems {
 	public static final ItemBase soulFragment = new ItemBase("soul_fragment");
 	public static final ItemBase unfiredSoulBook = (ItemBase) new ItemBase("unfired_soul_book").setMaxStackSize(1);
 	
-	public static ItemStack enchantedBook = ItemStack.EMPTY;
+	public static final ItemShapeShiftingToolBag tool = new ItemShapeShiftingToolBag("shape_shifting_tool_bag");
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> evt) {
@@ -69,5 +70,6 @@ public class ModItems {
 		r.register(soulbinder);
 		r.register(soulFragment);
 		r.register(unfiredSoulBook);
+		r.register(tool);
 	}
 }
