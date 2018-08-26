@@ -11,7 +11,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerShapeShifterToolBag extends Container{
 
-
+	private ShapeShiftingToolBagItemHandler tool;
 	public ContainerShapeShifterToolBag(InventoryPlayer playerInventory, EntityPlayer player){
 			for(int i = 0; i < 3; ++i){
 				for(int j = 0; j < 9; ++j){
@@ -24,7 +24,7 @@ public class ContainerShapeShifterToolBag extends Container{
 			}
 			
 			if(ItemShapeShiftingToolBag.isTool(player.getHeldItemMainhand())){
-				ShapeShiftingToolBagItemHandler tool = new ShapeShiftingToolBagItemHandler(player.getHeldItemMainhand());
+				 tool = new ShapeShiftingToolBagItemHandler(player.getHeldItemMainhand());
 				for(int i = 0; i < tool.getSlots(); ++i){
 					this.addSlotToContainer(new SlotItemHandler(tool, i, 8, 8 + i * 18));
 			}
@@ -68,6 +68,13 @@ public class ContainerShapeShifterToolBag extends Container{
         }
 
         return itemstack;
+    }
+	
+	@Override
+    public void onContainerClosed(EntityPlayer playerIn)
+    {
+        super.onContainerClosed(playerIn);
+        tool.write();
     }
 
 }

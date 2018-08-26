@@ -49,7 +49,7 @@ public class SoulBoundHandler {
 		else
 			event.getToolTip().add(I18n.format("tooltips.moregadgets:items.soulbound"));
 	}
-	
+
 	@SubscribeEvent(priority=EventPriority.LOW)
 	public static void onPlayerDeath(LivingDeathEvent event) {
 		if(event.getEntity() != null && event.getEntity() instanceof EntityPlayer && !(event.getEntity() instanceof FakePlayer)) {
@@ -69,7 +69,7 @@ public class SoulBoundHandler {
 			return;
 		}
 		EntityPlayer player = event.getEntityPlayer();
-				
+
 		if (player.world.getGameRules().getBoolean("keepInventory")) {
 			return;
 		}
@@ -85,14 +85,14 @@ public class SoulBoundHandler {
 		}
 		soul.writeToNBT();
 	}
-	
+
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public static void onPlayerDropLate(PlayerDropsEvent event) {
 		if (event.getEntityPlayer() == null || event.getEntityPlayer() instanceof FakePlayer || event.isCanceled()) {
 			return;
 		}
 		EntityPlayer player = event.getEntityPlayer();
-		
+
 		if (player.world.getGameRules().getBoolean("keepInventory")) {
 			return;
 		}
@@ -108,14 +108,14 @@ public class SoulBoundHandler {
 		}
 		soul.writeToNBT();
 	}
-	
+
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onPlayerDropLater(PlayerDropsEvent event) {
 		if (event.getEntityPlayer() == null || event.getEntityPlayer() instanceof FakePlayer || event.isCanceled()) {
 			return;
 		}
 		EntityPlayer player = event.getEntityPlayer();
-		
+
 		if (player.world.getGameRules().getBoolean("keepInventory")) {
 			return;
 		}
@@ -137,13 +137,13 @@ public class SoulBoundHandler {
 	public static void onPlayerSpawn(PlayerEvent.Clone event) {
 		if (!event.isWasDeath() || event.isCanceled())
 			return;
-		
+
 		if (event.getOriginal() == null || event.getEntityPlayer() == null || event.getEntityPlayer() instanceof FakePlayer) 
 			return;
-		
+
 		EntityPlayer player = event.getEntityPlayer();
 		EntityPlayer original = event.getOriginal();
-		
+
 		if (player.world.getGameRules().getBoolean("keepInventory"))
 			return;
 
@@ -174,7 +174,7 @@ public class SoulBoundHandler {
 					soul.mainInventory.set(i, ItemStack.EMPTY);
 			}
 		}
-		
+
 		for (int i = 0; i < soul.offHandInventory.size(); i++) {
 			ItemStack item = soul.offHandInventory.get(i);
 			if (player.inventory.offHandInventory.get(i).isEmpty()) {
@@ -186,19 +186,19 @@ public class SoulBoundHandler {
 					soul.offHandInventory.set(i, ItemStack.EMPTY);
 			}
 		}
-		
+
 		soul.writeToNBT();
-		
+
 	}
-	
+
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onPlayerSpawnLate(PlayerEvent.Clone event) {
 		if (!event.isWasDeath() || event.isCanceled())
 			return;
-		
+
 		if (event.getOriginal() == null || event.getEntityPlayer() == null || event.getEntityPlayer() instanceof FakePlayer) 
 			return;
-		
+
 		EntityPlayer player = event.getEntityPlayer();
 		EntityPlayer original = event.getOriginal();
 		if (player.world.getGameRules().getBoolean("keepInventory"))
@@ -231,7 +231,7 @@ public class SoulBoundHandler {
 					soul.mainInventory.set(i, ItemStack.EMPTY);
 			}
 		}
-		
+
 		for (int i = 0; i < soul.offHandInventory.size(); i++) {
 			ItemStack item = soul.offHandInventory.get(i);
 			if (player.inventory.offHandInventory.get(i).isEmpty()) {
@@ -243,8 +243,8 @@ public class SoulBoundHandler {
 					soul.offHandInventory.set(i, ItemStack.EMPTY);
 			}
 		}
-		
-		
+
+
 		/* Needs to be done here, else it will not sync a.k.a the items are destroyed */
 		if(Loader.isModLoaded("baubles")) {
 			IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
@@ -259,8 +259,8 @@ public class SoulBoundHandler {
 				}
 			}
 		}
-		
-		
+
+
 		/* Needs to be done here */
 		if(GalacticraftIntergration.getInventory(player) != null) {
 			IInventory galacticraft = GalacticraftIntergration.getInventory(player);
@@ -275,7 +275,7 @@ public class SoulBoundHandler {
 				}
 			}
 		}
-		
+
 		soul.clear();
 	}
 
@@ -295,18 +295,18 @@ public class SoulBoundHandler {
 			}
 		}
 	}
-	
-	  private static boolean tryToSpawnEntityItemAtPlayer(EntityPlayer entityPlayer, @Nonnull ItemStack stack) {
-		    if (entityPlayer == null) 
-		    	return false;
-		      EntityItem item = new EntityItem(entityPlayer.world, entityPlayer.posX, entityPlayer.posY + 0.5, entityPlayer.posZ, stack);
-		      item.setPickupDelay(40);
-		      item.lifespan *= 5;
-		      item.motionX = 0;
-		      item.motionZ = 0;
-		      entityPlayer.world.spawnEntity(item);
-		      return true;
-		  }
+
+	private static boolean tryToSpawnEntityItemAtPlayer(EntityPlayer entityPlayer, @Nonnull ItemStack stack) {
+		if (entityPlayer == null) 
+			return false;
+		EntityItem item = new EntityItem(entityPlayer.world, entityPlayer.posX, entityPlayer.posY + 0.5, entityPlayer.posZ, stack);
+		item.setPickupDelay(40);
+		item.lifespan *= 5;
+		item.motionX = 0;
+		item.motionZ = 0;
+		entityPlayer.world.spawnEntity(item);
+		return true;
+	}
 
 	private static boolean isStackSoulBound(ItemStack item) {
 		return NBTHelper.doesItemStackHaveTag(item, NBTTags.SOULBOUND);

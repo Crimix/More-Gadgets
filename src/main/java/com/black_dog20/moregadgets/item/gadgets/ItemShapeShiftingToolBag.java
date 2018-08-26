@@ -1,15 +1,22 @@
 package com.black_dog20.moregadgets.item.gadgets;
 
+import javax.annotation.Nonnull;
+
+import org.lwjgl.input.Keyboard;
+
 import com.black_dog20.moregadgets.MoreGadgets;
+import com.black_dog20.moregadgets.client.gui.GuiShapeShifterToolBag;
 import com.black_dog20.moregadgets.init.ModItems;
 import com.black_dog20.moregadgets.item.ItemBase;
 import com.black_dog20.moregadgets.network.PacketHandler;
+import com.black_dog20.moregadgets.network.message.MessageOpenGuiOnServer;
 import com.black_dog20.moregadgets.network.message.MessageShapeShiftTool;
 import com.black_dog20.moregadgets.reference.NBTTags;
 import com.black_dog20.moregadgets.storage.ShapeShiftingToolBagItemHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -38,19 +45,21 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 		new ShapeShiftingToolBagItemHandler(stack);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-		if(isTool(event.getItemStack()) && !event.getWorld().isRemote && event.getEntityPlayer().isSneaking()) {
+		if(isTool(event.getItemStack()) && (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL))) {
 			EntityPlayer player = event.getEntityPlayer();
-			event.getEntityPlayer().openGui(MoreGadgets.instance, MoreGadgets.GUI_SHAPESHIFTER, player.world, (int)player.posX, (int)player.posY, (int)player.posZ);
+			PacketHandler.network.sendToServer(new MessageOpenGuiOnServer(MoreGadgets.GUI_SHAPESHIFTER, player));
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onRightClickBlock(PlayerInteractEvent.RightClickItem event) {
-		if(isTool(event.getItemStack()) && !event.getWorld().isRemote && event.getEntityPlayer().isSneaking()) {
+		if(isTool(event.getItemStack()) && (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL))) {
 			EntityPlayer player = event.getEntityPlayer();
-			event.getEntityPlayer().openGui(MoreGadgets.instance, MoreGadgets.GUI_SHAPESHIFTER, player.world, (int)player.posX, (int)player.posY, (int)player.posZ);
+			PacketHandler.network.sendToServer(new MessageOpenGuiOnServer(MoreGadgets.GUI_SHAPESHIFTER, player));
 		}
 	}
 	
@@ -59,7 +68,7 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 	public void onToolTipEvent(ItemTooltipEvent event) {
 		if(isTool(event.getItemStack())) {
 			event.getToolTip().add(I18n.format("tooltips.moregadgets:shapeshifter"));
-			event.getToolTip().add(I18n.format("tooltips.moregadgets:shapeshifter.use"));
+			event.getToolTip().add(I18n.format("tooltips.moregadgets:shapeshifter.use", Keyboard.getKeyName(Keyboard.KEY_LCONTROL)));
 		}
 	}
 	
@@ -67,7 +76,9 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 	public void onItemBroken(PlayerDestroyItemEvent event) {
 		if(isTool(event.getOriginal())) {
 			ItemStack stack = new ShapeShiftingToolBagItemHandler(event.getOriginal()).removeStack(event.getOriginal());
-			event.getEntityPlayer().setHeldItem(EnumHand.MAIN_HAND, stack);
+			if(!event.getEntityPlayer().inventory.addItemStackToInventory(stack)) {
+				tryToSpawnEntityItemAtPlayer(event.getEntityPlayer(),stack);
+			}
 		}
 	}
 	
@@ -79,6 +90,8 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
 			if(isTool(player.getHeldItemMainhand()) && player.world.isRemote) {
+				if(Minecraft.getMinecraft().currentScreen instanceof GuiShapeShifterToolBag)
+					return;
 				if(count % 10 == 0) {
 					PacketHandler.network.sendToServer(new MessageShapeShiftTool(player.inventory.currentItem, Minecraft.getMinecraft().objectMouseOver));
 					count = 0;
@@ -96,6 +109,18 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 			return true;
 
 		return stack.hasTagCompound() && stack.getTagCompound().hasKey(NBTTags.SHAPE_SHIFTING_ITEM_INVENTORY);
+	}
+	
+	private static boolean tryToSpawnEntityItemAtPlayer(EntityPlayer entityPlayer, @Nonnull ItemStack stack) {
+		if (entityPlayer == null) 
+			return false;
+		EntityItem item = new EntityItem(entityPlayer.world, entityPlayer.posX, entityPlayer.posY + 0.5, entityPlayer.posZ, stack);
+		item.setPickupDelay(40);
+		item.lifespan *= 5;
+		item.motionX = 0;
+		item.motionZ = 0;
+		entityPlayer.world.spawnEntity(item);
+		return true;
 	}
 
 }

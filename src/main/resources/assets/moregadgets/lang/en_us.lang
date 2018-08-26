@@ -39,7 +39,7 @@ tooltips.moregadgets:horseshoe.cooldown=Cooldown: %ds
 tooltips.moregadgets:unfired_soul_book.drop=Throw into fire to get a enchanted %s§7 book
 tooltips.moregadgets:soul_binder.use=Combine with any item stack of any size to soulbind the stack.
 tooltips.moregadgets:shapeshifter=§6Shapeshifter item 
-tooltips.moregadgets:shapeshifter.use= §6- Sneak + right click to open
+tooltips.moregadgets:shapeshifter.use= §6- %s + right click to open
 
 //Info Items
 item.moregadgets:soul_fragment.info=Sometimes dropped by monsters killed with a weapon enchanted with the §dSoul Ripping§r enchantment.

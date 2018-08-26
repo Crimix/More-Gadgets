@@ -47,6 +47,20 @@ public class ShapeShiftingToolBagItemHandler extends ItemStackHandler {
 		this.write();
 		return result;
 	}
+	
+	@Override
+    @Nonnull
+    public ItemStack extractItem(int slot, int amount, boolean simulate)
+    {
+        if (amount == 0)
+            return ItemStack.EMPTY;
+
+        validateSlotIndex(slot);
+
+       ItemStack stack = super.extractItem(slot, amount, simulate);
+       this.write();
+       return stack;
+    }
 
 	public ItemStack findToolForClass(String toolClass) {
 		if(toolClass.equals("sword")) {
@@ -66,6 +80,9 @@ public class ShapeShiftingToolBagItemHandler extends ItemStackHandler {
 	}
 
 	public void updateStack(ItemStack stack) {
+		if(stack.isEmpty())
+			return;
+		
 		for(int i = 0; i < stacks.size(); i++)
 			if(stacks.get(i).getItem() == stack.getItem()) {
 				if(stack.getTagCompound() != null && stack.getTagCompound().hasKey(NBTTags.SHAPE_SHIFTING_ITEM_INVENTORY))
