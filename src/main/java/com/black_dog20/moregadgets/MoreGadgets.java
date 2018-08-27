@@ -2,10 +2,10 @@ package com.black_dog20.moregadgets;
 
 import org.apache.logging.log4j.Logger;
 
-import com.black_dog20.moregadgets.network.PacketHandler;
 import com.black_dog20.moregadgets.entity.EntityItemFire;
 import com.black_dog20.moregadgets.handler.GuiHandler;
 import com.black_dog20.moregadgets.init.Recipes;
+import com.black_dog20.moregadgets.network.PacketHandler;
 import com.black_dog20.moregadgets.proxies.IProxy;
 import com.black_dog20.moregadgets.reference.Reference;
 

@@ -5,12 +5,11 @@ import com.black_dog20.moregadgets.item.ItemHealthFood;
 import com.black_dog20.moregadgets.item.gadgets.ItemLuckyHorseshoe;
 import com.black_dog20.moregadgets.item.gadgets.ItemLuckyHorseshoe.HorseshoeLevel;
 import com.black_dog20.moregadgets.item.gadgets.ItemRebreather;
-import com.black_dog20.moregadgets.item.gadgets.ItemShapeShiftingToolBag;
 import com.black_dog20.moregadgets.item.gadgets.ItemRebreather.RebreatherLevel;
+import com.black_dog20.moregadgets.item.gadgets.ItemShapeShiftingToolBag;
 import com.black_dog20.moregadgets.reference.Reference;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

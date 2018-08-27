@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 public class SoulbindingRecipe implements IRecipe {
 
 	ResourceLocation registryName = new ResourceLocation(Reference.MOD_ID, "soulbinding");
-	
+
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn)
 	{
@@ -43,7 +43,7 @@ public class SoulbindingRecipe implements IRecipe {
 				{
 					if (target == null)
 					{
-							target = stack;
+						target = stack;
 					}
 					else
 					{
@@ -61,7 +61,7 @@ public class SoulbindingRecipe implements IRecipe {
 		inv.clear();
 		return NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 	}
-	
+
 	@Override
 	public boolean isDynamic() {
 		return true;
