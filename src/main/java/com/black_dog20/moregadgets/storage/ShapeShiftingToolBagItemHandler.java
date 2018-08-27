@@ -133,7 +133,7 @@ public class ShapeShiftingToolBagItemHandler extends ItemStackHandler {
 				if(newStack.getItem() != ModItems.tool)
 					nbt.setBoolean(NBTTags.SOULBOUND_TEMP, true);
 			}
-			if(bag.getItem() == ModItems.tool && bag.hasTagCompound() && bag.getTagCompound().hasKey(NBTTags.SOULBOUND)) {
+			if(bag.getItem() == ModItems.tool && bag.hasTagCompound() && bag.getTagCompound().hasKey(NBTTags.SOULBOUND) && !newStack.getTagCompound().hasKey(NBTTags.SOULBOUND)) {
 				nbt.setBoolean(NBTTags.SOULBOUND, true);
 				nbt.setBoolean(NBTTags.SOULBOUND_TEMP, true);
 			}
