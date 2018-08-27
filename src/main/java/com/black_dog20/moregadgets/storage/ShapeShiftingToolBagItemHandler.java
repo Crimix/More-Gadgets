@@ -1,7 +1,5 @@
 package com.black_dog20.moregadgets.storage;
 
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 
 import com.black_dog20.moregadgets.init.ModItems;
@@ -10,7 +8,6 @@ import com.black_dog20.moregadgets.reference.NBTTags;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ShapeShiftingToolBagItemHandler extends ItemStackHandler {
