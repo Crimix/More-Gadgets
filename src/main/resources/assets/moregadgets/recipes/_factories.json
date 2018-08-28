@@ -1,0 +1,9 @@
+{
+  "ingredients": {
+    "enchanted_item": "com.black_dog20.moregadgets.crafting.EnchantedIngredientFactory"
+  },
+  "recipes": {
+		"enchanted_item_shaped": "com.black_dog20.moregadgets.crafting.ShapedEnchantedItemRecipe$Factory",
+		"enchanted_item_shapeless": "com.black_dog20.moregadgets.crafting.ShapelessEnchantedItemRecipe$Factory"
+	}
+}

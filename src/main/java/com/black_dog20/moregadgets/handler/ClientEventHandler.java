@@ -22,7 +22,7 @@ public class ClientEventHandler {
 		else if(event.getItemStack().getItem() == ModItems.blueDust)
 			event.getToolTip().add(I18n.format("tooltips.moregadgets:blue_dust.create", new ItemStack(Items.DYE, 1, 4).getDisplayName()));
 		else if(event.getItemStack().getItem() == ModItems.unfiredSoulBook)
-			event.getToolTip().add(I18n.format("tooltips.moregadgets:unfired_soul_book.drop", I18n.format("enchantment.moregadgets.soul_rip")));
+			event.getToolTip().add(I18n.format("tooltips.moregadgets:unfired_soul_book.drop", I18n.format("enchantment.moregadgets_soul_rip")));
 		else if(event.getItemStack().getItem() == ModItems.soulbinder)
 			event.getToolTip().add(I18n.format("tooltips.moregadgets:soul_binder.use"));
 	}

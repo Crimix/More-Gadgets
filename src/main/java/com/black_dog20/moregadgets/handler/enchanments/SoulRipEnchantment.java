@@ -5,7 +5,6 @@ import org.lwjgl.input.Keyboard;
 import com.black_dog20.moregadgets.MoreGadgets;
 import com.black_dog20.moregadgets.init.ModEnchantments;
 import com.black_dog20.moregadgets.init.ModItems;
-import com.black_dog20.moregadgets.reference.Reference;
 import com.black_dog20.moregadgets.utility.Helper;
 
 import net.minecraft.client.resources.I18n;
@@ -14,20 +13,20 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber(modid = Reference.MOD_ID)
 public class SoulRipEnchantment extends Enchantment{
 
 	public SoulRipEnchantment() {
 		super(Rarity.RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
-		this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "soul_rip"));
+		//this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "soul_rip"));
+		this.setName("moregadgets_soul_rip");
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class SoulRipEnchantment extends Enchantment{
 	}
 
 	@SubscribeEvent
-	public static void onEntityDeath(LivingDeathEvent event) {
+	public void onEntityDeath(LivingDeathEvent event) {
 		if(event.getEntity() != null && event.getEntity().world.isRemote)
 			return;
 		
@@ -48,12 +47,6 @@ public class SoulRipEnchantment extends Enchantment{
 					event.getEntity().dropItem(ModItems.soulFragment, 1);
 			}
 		}
-	}
-	
-	@Override
-	public String getName() {
-
-		return "enchantment.moregadgets.soul_rip";
 	}
 	
 	@Override
@@ -75,7 +68,7 @@ public class SoulRipEnchantment extends Enchantment{
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public static void onToolTipEvent(ItemTooltipEvent event) {
+	public void onToolTipEvent(ItemTooltipEvent event) {
 		if(!Helper.doesItemHaveEnchantment(event.getItemStack(), ModEnchantments.soulRipEnchantment))
 			return;
 		int soulripLocation = event.getToolTip().indexOf(ModEnchantments.soulRipEnchantment.getTranslatedName(1));

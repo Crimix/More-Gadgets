@@ -1,0 +1,21 @@
+{
+  "type": "enchanted_item_shaped",
+  "pattern": [
+    "lll",
+    "lcl",
+    "lll"
+  ],
+  "key": {
+    "c": {
+      "item": "moregadgets:fired_soul_book"
+    },
+    "l": {
+      "item": "moregadgets:burnt_dust"
+    }
+  },
+  "result": {
+    "item": "minecraft:enchanted_book",
+    "enchantment": "moregadgets:soul_rip",
+    "enchantment_lvl" : 1
+  }
+}

@@ -38,6 +38,7 @@ public class Recipes {
 		RecipeToJSON toJSON = new RecipeToJSON(Reference.MOD_ID, true);
 		
 		toJSON.addShapedRecipe(ModItems.unfiredSoulBook, new Object[]{"ls","bg", 'b', Items.BOOK, 'l', ModItems.blueDust, 's', Items.NETHER_STAR, 'g', Items.GHAST_TEAR});
+		
 		toJSON.addShapedRecipe(ModItems.witherBread, new Object[]{"lsl","gbg", "ggg", 'b', Items.BREAD, 'l', ModItems.soulFragment, 's', Items.NETHER_STAR, 'g', Blocks.SOUL_SAND});
 		toJSON.addShapedRecipe(ModItems.enderBread, new Object[]{"lsl","gbg", "ggg", 'b', Items.BREAD, 'l', ModItems.soulFragment, 's', Items.DRAGON_BREATH, 'g', Items.ENDER_EYE});
 		toJSON.addShapedRecipe(ModItems.airFilter, new Object[]{"lsl","scs", "lsl", 'c', Items.REEDS, 'l', ModItems.blueDust, 's', Items.STRING});

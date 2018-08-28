@@ -59,7 +59,7 @@ soulbound.support.galacticraft= - Galacticraft extended player inventory
 //Blocks
 
 //Enchantments
-enchantment.moregadgets.soul_rip=§dSoul Ripping
+enchantment.moregadgets_soul_rip=§dSoul Ripping
 
 //Potions
 luckyHorseshoeCooldown=Cooldown

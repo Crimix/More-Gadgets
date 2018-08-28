@@ -31,7 +31,7 @@ public class Helper {
 	}
 	
 	public static boolean doesItemHaveEnchantment(ItemStack stack, Enchantment enchantment, int level) {
-		return EnchantmentHelper.getEnchantments(stack).containsKey(enchantment) && EnchantmentHelper.getEnchantments(stack).get(enchantment) == level;
+		return EnchantmentHelper.getEnchantments(stack) != null && EnchantmentHelper.getEnchantments(stack).containsKey(enchantment) && EnchantmentHelper.getEnchantments(stack).get(enchantment) == level;
 	}
 	
 }

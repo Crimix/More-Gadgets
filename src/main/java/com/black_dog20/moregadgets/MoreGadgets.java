@@ -2,6 +2,7 @@ package com.black_dog20.moregadgets;
 
 import org.apache.logging.log4j.Logger;
 
+import com.black_dog20.moregadgets.creativetab.CreativeTab;
 import com.black_dog20.moregadgets.entity.EntityItemFire;
 import com.black_dog20.moregadgets.handler.GuiHandler;
 import com.black_dog20.moregadgets.init.Recipes;
@@ -37,7 +38,6 @@ public class MoreGadgets {
 		PacketHandler.init();
 		proxy.registerPreInit();
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID, "FireImmunEntityItem"), EntityItemFire.class, "FireImmunEntityItem", 0, instance, 64, 10, true);
-
 		
 		logger.info("Pre Initialization Complete!");
 	}
