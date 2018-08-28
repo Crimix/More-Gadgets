@@ -141,6 +141,7 @@ public class ItemRebreather extends ItemBase{
 		return ItemStack.EMPTY;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);

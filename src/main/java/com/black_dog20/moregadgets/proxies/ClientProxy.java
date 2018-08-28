@@ -4,6 +4,7 @@ import com.black_dog20.moregadgets.client.gui.GuiHealth;
 import com.black_dog20.moregadgets.config.ModConfig;
 import com.black_dog20.moregadgets.config.Server;
 import com.black_dog20.moregadgets.config.ServerConfig;
+import com.black_dog20.moregadgets.handler.ClientEventHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +17,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerPreInit() {
 		MinecraftForge.EVENT_BUS.register(new GuiHealth());
+		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 	}
 	
 	@Override

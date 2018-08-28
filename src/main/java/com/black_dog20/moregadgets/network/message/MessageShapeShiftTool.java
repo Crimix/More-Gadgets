@@ -1,5 +1,6 @@
 package com.black_dog20.moregadgets.network.message;
 
+import com.black_dog20.moregadgets.item.gadgets.ItemShapeShiftingToolBag;
 import com.black_dog20.moregadgets.storage.ShapeShiftingToolBagItemHandler;
 
 import io.netty.buffer.ByteBuf;
@@ -27,30 +28,32 @@ public class MessageShapeShiftTool implements IMessage, IMessageHandler<MessageS
 	@Override
 	public IMessage onMessage(MessageShapeShiftTool message, MessageContext context) {
 		EntityPlayer player = context.getServerHandler().player;
-		ShapeShiftingToolBagItemHandler toolBag = new ShapeShiftingToolBagItemHandler(player.inventory.getStackInSlot(message.slot));
-		toolBag.updateStack(player.inventory.getStackInSlot(message.slot).copy());
-		ItemStack newStack = player.inventory.getStackInSlot(message.slot);
-		if(!message.isEntityResult) {
-			IBlockState state = player.getEntityWorld().getBlockState(new BlockPos(message.x,message.y,message.z));
+		if(ItemShapeShiftingToolBag.isTool(player.inventory.getStackInSlot(message.slot))) {
+			ShapeShiftingToolBagItemHandler toolBag = new ShapeShiftingToolBagItemHandler(player.inventory.getStackInSlot(message.slot));
+			toolBag.updateStack(player.inventory.getStackInSlot(message.slot).copy());
+			ItemStack newStack = player.inventory.getStackInSlot(message.slot);
+			if(!message.isEntityResult) {
+				IBlockState state = player.getEntityWorld().getBlockState(new BlockPos(message.x,message.y,message.z));
 
-			if(state == null)
-				return null;
+				if(state == null)
+					return null;
 
-			if(state.getBlock().isToolEffective("pickaxe", state)) {
-				newStack = toolBag.findToolForClass("pickaxe");
-			} else if(state.getBlock().isToolEffective("shovel", state)) {
-				newStack = toolBag.findToolForClass("shovel");
-			} else if(state.getBlock().isToolEffective("axe", state)) {
-				newStack = toolBag.findToolForClass("axe");
+				if(state.getBlock().isToolEffective("pickaxe", state)) {
+					newStack = toolBag.findToolForClass("pickaxe");
+				} else if(state.getBlock().isToolEffective("shovel", state)) {
+					newStack = toolBag.findToolForClass("shovel");
+				} else if(state.getBlock().isToolEffective("axe", state)) {
+					newStack = toolBag.findToolForClass("axe");
+				} else {
+					newStack = toolBag.findToolForClass("sword");
+				}
 			} else {
 				newStack = toolBag.findToolForClass("sword");
 			}
-		} else {
-			newStack = toolBag.findToolForClass("sword");
-		}
-		if(newStack != player.inventory.getStackInSlot(message.slot) && !ItemStack.areItemsEqual(newStack, player.inventory.getStackInSlot(message.slot))) {
-			player.inventory.setInventorySlotContents(message.slot, newStack);
-			return new MessageShapeShiftToolClient();
+			if(newStack != player.inventory.getStackInSlot(message.slot) && !ItemStack.areItemsEqual(newStack, player.inventory.getStackInSlot(message.slot))) {
+				player.inventory.setInventorySlotContents(message.slot, newStack);
+				return new MessageShapeShiftToolClient();
+			}
 		}
 		return null;
 	}

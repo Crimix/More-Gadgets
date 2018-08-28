@@ -2,6 +2,7 @@ package com.black_dog20.moregadgets.handler;
 
 import com.black_dog20.moregadgets.MoreGadgets;
 import com.black_dog20.moregadgets.client.gui.GuiShapeShifterToolBag;
+import com.black_dog20.moregadgets.client.gui.teleporter.GuiTeleporter;
 import com.black_dog20.moregadgets.container.ContainerShapeShifterToolBag;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,8 @@ public class GuiHandler implements IGuiHandler {
 		switch (ID) {
 			case MoreGadgets.GUI_SHAPESHIFTER:
 				return new ContainerShapeShifterToolBag(player.inventory, player);
+			case MoreGadgets.GUI_TELEPORT:
+				return null;
 		}
 		return null;
 	}
@@ -24,6 +27,8 @@ public class GuiHandler implements IGuiHandler {
 		switch (ID) {
 			case MoreGadgets.GUI_SHAPESHIFTER:
 				return new GuiShapeShifterToolBag(player);
+			case MoreGadgets.GUI_TELEPORT:
+				return new GuiTeleporter(player);
 		}
 		return null;
 	}

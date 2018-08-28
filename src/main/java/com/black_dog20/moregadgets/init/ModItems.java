@@ -7,6 +7,7 @@ import com.black_dog20.moregadgets.item.gadgets.ItemLuckyHorseshoe.HorseshoeLeve
 import com.black_dog20.moregadgets.item.gadgets.ItemRebreather;
 import com.black_dog20.moregadgets.item.gadgets.ItemRebreather.RebreatherLevel;
 import com.black_dog20.moregadgets.item.gadgets.ItemShapeShiftingToolBag;
+import com.black_dog20.moregadgets.item.gadgets.ItemTeleporter;
 import com.black_dog20.moregadgets.reference.Reference;
 
 import net.minecraft.item.Item;
@@ -42,6 +43,7 @@ public class ModItems {
 	public static final ItemBase unfiredSoulBook = (ItemBase) new ItemBase("unfired_soul_book").setMaxStackSize(1);
 	
 	public static final ItemShapeShiftingToolBag tool = new ItemShapeShiftingToolBag("shape_shifting_tool_bag");
+	public static final ItemTeleporter teleporter = new ItemTeleporter("teleporter");
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> evt) {
@@ -70,5 +72,6 @@ public class ModItems {
 		r.register(soulFragment);
 		r.register(unfiredSoulBook);
 		r.register(tool);
+		r.register(teleporter);
 	}
 }

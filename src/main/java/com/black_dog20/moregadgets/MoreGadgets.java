@@ -29,6 +29,7 @@ public class MoreGadgets {
 	public static IProxy proxy;
 	
 	public static final int GUI_SHAPESHIFTER = 0;
+	public static final int GUI_TELEPORT = 1;
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
