@@ -13,6 +13,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -50,6 +51,9 @@ public class ShapelessEnchantedItemRecipe extends ShapelessOreRecipe {
 
 	        Map<Enchantment, Integer> enchMap = Collections.singletonMap(enchantment, enchantLvl);
 	        EnchantmentHelper.setEnchantments(enchMap, result);
+	        result.setTagCompound(new NBTTagCompound());
+	        result.getTagCompound().setString("moregadgets_enchantment_recipe", enchantName);
+	        result.getTagCompound().setInteger("moregadgets_enchantment_level_recipe", enchantLvl);
 			
 			return new ShapelessEnchantedItemRecipe(group.isEmpty() ? null : new ResourceLocation(group), ingredients, result);
 		}

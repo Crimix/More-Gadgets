@@ -12,6 +12,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -43,12 +44,14 @@ public class ShapedEnchantedItemRecipe extends ShapedOreRecipe {
 	        int enchantLvl = JsonUtils.getInt(resultJson, "enchantment_lvl");
 
 	        Enchantment enchantment = Enchantment.getEnchantmentByLocation(enchantName);
-	        System.out.println(enchantment);
 	        if (enchantment == null)
 	            throw new JsonSyntaxException("Unknown enchantment '" + enchantName + "'");
 
 	        Map<Enchantment, Integer> enchMap = Collections.singletonMap(enchantment, enchantLvl);
 	        EnchantmentHelper.setEnchantments(enchMap, result);
+	        result.setTagCompound(new NBTTagCompound());
+	        result.getTagCompound().setString("moregadgets_enchantment_recipe", enchantName);
+	        result.getTagCompound().setInteger("moregadgets_enchantment_level_recipe", enchantLvl);
 			
 			return new ShapedEnchantedItemRecipe(group.isEmpty() ? null : new ResourceLocation(group), result, primer);
 		}

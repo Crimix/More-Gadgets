@@ -1,6 +1,8 @@
 package com.black_dog20.moregadgets.handler;
 
+import com.black_dog20.moregadgets.init.ModEnchantments;
 import com.black_dog20.moregadgets.init.ModItems;
+import com.black_dog20.moregadgets.utility.Helper;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
@@ -25,5 +27,7 @@ public class ClientEventHandler {
 			event.getToolTip().add(I18n.format("tooltips.moregadgets:unfired_soul_book.drop", I18n.format("enchantment.moregadgets_soul_rip")));
 		else if(event.getItemStack().getItem() == ModItems.soulbinder)
 			event.getToolTip().add(I18n.format("tooltips.moregadgets:soul_binder.use"));
+		else if(Helper.shouldItemHaveEnchantmentButDoesNot(event.getItemStack(), ModEnchantments.soulRipEnchantment, 1))
+			event.getToolTip().add(I18n.format("tooltips.moregadgets:enchantment_wrong", I18n.format("enchantment.moregadgets_soul_rip")));
 	}
 }

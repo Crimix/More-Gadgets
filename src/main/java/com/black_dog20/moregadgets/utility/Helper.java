@@ -26,6 +26,15 @@ public class Helper {
 		return fmlRandom;
 	}
 	
+	public static boolean shouldItemHaveEnchantmentButDoesNot(ItemStack stack, Enchantment enchantment, int level) {
+			if(stack.getTagCompound() != null && stack.getTagCompound().hasKey("moregadgets_enchantment_recipe") && stack.getTagCompound().hasKey("moregadgets_enchantment_level_recipe")  && !doesItemHaveEnchantment(stack, enchantment, level)) {
+				String enchantmentString = stack.getTagCompound().getString("moregadgets_enchantment_recipe");
+				int enchantmentLevel = stack.getTagCompound().getInteger("moregadgets_enchantment_level_recipe");
+				return enchantmentString.equals(enchantment.getRegistryName().toString()) && enchantmentLevel == level;
+			}
+			return false;
+	}
+	
 	public static boolean doesItemHaveEnchantment(ItemStack stack, Enchantment enchantment) {
 		return EnchantmentHelper.getEnchantments(stack).containsKey(enchantment);
 	}

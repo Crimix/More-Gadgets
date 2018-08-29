@@ -19,6 +19,7 @@ item.moregadgets:gold_horseshoe.name=Gold Lucky Horseshoe
 item.moregadgets:diamond_horseshoe.name=Diamond Lucky Horseshoe
 item.moregadgets:emerald_horseshoe.name=Emerald Lucky Horseshoe
 item.moregadgets:shape_shifting_tool_bag.name=Shapeshifter's Tool Bag
+item.moregadgets:fired_soul_book.name=Heat Treated Soul Ripping Book
 
 //Item tools
 
@@ -41,6 +42,7 @@ tooltips.moregadgets:unfired_soul_book.drop=Throw into fire to get a enchanted %
 tooltips.moregadgets:soul_binder.use=Combine with any item stack of any size to soulbind the stack.
 tooltips.moregadgets:shapeshifter=§6Shapeshifter item 
 tooltips.moregadgets:shapeshifter.use= §6- %s + right click to open
+tooltips.moregadgets:enchantment_wrong=§cSomething went wrong when enchanting, enchantment should have been %s. §cRight click item to correct the problem.
 
 //Info Items
 item.moregadgets:soul_fragment.info=Sometimes dropped by monsters killed with a weapon enchanted with the §dSoul Ripping§r enchantment.
