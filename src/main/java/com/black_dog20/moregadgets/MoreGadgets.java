@@ -2,7 +2,6 @@ package com.black_dog20.moregadgets;
 
 import org.apache.logging.log4j.Logger;
 
-import com.black_dog20.moregadgets.creativetab.CreativeTab;
 import com.black_dog20.moregadgets.entity.EntityItemFire;
 import com.black_dog20.moregadgets.handler.GuiHandler;
 import com.black_dog20.moregadgets.init.Recipes;

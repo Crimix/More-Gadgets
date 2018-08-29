@@ -2,20 +2,16 @@ package com.black_dog20.moregadgets.handler;
 
 import java.util.Map;
 
-import com.black_dog20.moregadgets.MoreGadgets;
 import com.black_dog20.moregadgets.init.ModEnchantments;
 import com.black_dog20.moregadgets.network.PacketHandler;
 import com.black_dog20.moregadgets.network.message.MessageConfigSync;
-import com.black_dog20.moregadgets.network.message.MessageOpenGuiOnServer;
 import com.black_dog20.moregadgets.reference.Reference;
 import com.black_dog20.moregadgets.utility.Helper;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
