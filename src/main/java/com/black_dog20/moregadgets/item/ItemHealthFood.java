@@ -70,9 +70,6 @@ public class ItemHealthFood extends ItemFoodBase {
 	
 	@SubscribeEvent
 	public void onPlayerCloneEvent(PlayerEvent.Clone event) {
-		if (!event.isWasDeath()) {
-			return;
-		}
 		IAttributeInstance oldHealth = event.getOriginal().getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
 		IAttributeInstance health = event.getEntityPlayer().getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
 
