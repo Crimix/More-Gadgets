@@ -49,8 +49,8 @@ public class ModItems {
 	public static final ItemBase unfiredSoulBook = register((ItemBase) new ItemBase("unfired_soul_book").setMaxStackSize(1));
 	public static final ItemBase firedSoulBook = register((ItemBase) new ItemBase("fired_soul_book").setMaxStackSize(1));
 	
-	public static final ItemBase tool = nregister(new ItemShapeShiftingToolBag("shape_shifting_tool_bag"));
-	public static final ItemBase teleporter = nregister(new ItemTeleporter("teleporter"));
+	public static final ItemBase tool = notregister(new ItemShapeShiftingToolBag("shape_shifting_tool_bag"));
+	public static final ItemBase teleporter = notregister(new ItemTeleporter("teleporter"));
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> evt) {
@@ -68,8 +68,7 @@ public class ModItems {
 		return input;
 	}
 	
-	private static ItemBase nregister(ItemBase input) {
-		//items.add(input);
+	private static ItemBase notregister(ItemBase input) {
 		return input;
 	}
 }
