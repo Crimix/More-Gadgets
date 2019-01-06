@@ -1,5 +1,7 @@
 package com.black_dog20.moregadgets.item.gadgets;
 
+import java.lang.reflect.Field;
+
 import javax.annotation.Nonnull;
 
 import org.lwjgl.input.Keyboard;
@@ -15,10 +17,12 @@ import com.black_dog20.moregadgets.reference.NBTTags;
 import com.black_dog20.moregadgets.storage.ShapeShiftingToolBagItemHandler;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -59,7 +63,7 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 			PacketHandler.network.sendToServer(new MessageOpenGuiOnServer(MoreGadgets.GUI_SHAPESHIFTER, player));
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onToolTipEvent(ItemTooltipEvent event) {
@@ -68,7 +72,7 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 			event.getToolTip().add(I18n.format("tooltips.moregadgets:shapeshifter.use", Keyboard.getKeyName(Keyboard.KEY_LCONTROL)));
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onItemBroken(PlayerDestroyItemEvent event) {
 		if(isTool(event.getOriginal())) {
@@ -78,25 +82,73 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 			}
 		}
 	}
-	
 
-	private int count = 0;
+
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public void onPlayerTick(LivingUpdateEvent event) {
 		if(event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
-			if(isTool(player.getHeldItemMainhand()) && player.world.isRemote) {
+			if(isTool(player.getHeldItemMainhand())) {
 				if(Minecraft.getMinecraft().currentScreen instanceof GuiShapeShifterToolBag)
 					return;
+				NBTTagCompound nbt = player.getHeldItemMainhand().getTagCompound();
+				int count = nbt.getInteger("count");
 				if(count % 10 == 0) {
 					PacketHandler.network.sendToServer(new MessageShapeShiftTool(player.inventory.currentItem, Minecraft.getMinecraft().objectMouseOver));
-					count = 0;
+					nbt.setInteger("count", 0);
 				}
-				count++;
+
+				nbt.setInteger("count", count++);
 			}
 		}
 	}
+
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onPlayerTickShapeshiftingNoEquipAnimation(LivingUpdateEvent event) {
+		if(event.getEntity() instanceof EntityPlayer) {		
+
+			EntityPlayer player = (EntityPlayer) event.getEntity();
+			ItemRenderer IR = Minecraft.getMinecraft().entityRenderer.itemRenderer;
+			if(IR!=null)
+				try{
+
+					ItemStack prevItem = ItemStack.EMPTY;
+					ItemStack currentItem = player.getHeldItemMainhand();
+
+					{
+						Field field = ItemRenderer.class.getDeclaredField("itemStackMainHand");
+						field.setAccessible(true);
+						prevItem = (ItemStack) field.get(IR);
+					}
+
+					if(isTool(prevItem) && isTool(currentItem)) {
+						float a1=1F;
+						{
+							Field field = ItemRenderer.class.getDeclaredField("equippedProgressMainHand");
+							field.setAccessible(true);
+							field.setFloat(IR,a1);
+						}
+						{
+							Field field = ItemRenderer.class.getDeclaredField("prevEquippedProgressMainHand");
+							field.setAccessible(true);
+							field.setFloat(IR,a1);
+						}
+						{
+							Field field = ItemRenderer.class.getDeclaredField("itemStackMainHand");
+							field.setAccessible(true);
+							field.set(IR, player.getHeldItemMainhand());
+						}
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+		}
+	}
+
+
 
 	public static boolean isTool(ItemStack stack) {
 		if(stack.isEmpty())
@@ -107,7 +159,7 @@ public class ItemShapeShiftingToolBag extends ItemBase{
 
 		return stack.hasTagCompound() && stack.getTagCompound().hasKey(NBTTags.SHAPE_SHIFTING_ITEM_INVENTORY);
 	}
-	
+
 	private static boolean tryToSpawnEntityItemAtPlayer(EntityPlayer entityPlayer, @Nonnull ItemStack stack) {
 		if (entityPlayer == null) 
 			return false;

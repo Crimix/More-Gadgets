@@ -4,6 +4,7 @@ import com.black_dog20.moregadgets.config.ModConfig;
 import com.black_dog20.moregadgets.config.Server;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ServerProxy extends CommonProxy {
@@ -28,4 +29,5 @@ public class ServerProxy extends CommonProxy {
 	public EntityPlayer getPlayerByIDFromMessageContext(int id, MessageContext ctx) {
 		return null;
 	}
+
 }
