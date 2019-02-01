@@ -27,7 +27,7 @@ public class MessageShapeShiftTool implements IMessage, IMessageHandler<MessageS
 
 	@Override
 	public IMessage onMessage(MessageShapeShiftTool message, MessageContext context) {
-		EntityPlayer player = context.getServerHandler().player;
+		EntityPlayer player = context.getServerHandler().player;	
 		if(ItemShapeShiftingToolBag.isTool(player.inventory.getStackInSlot(message.slot))) {
 			ShapeShiftingToolBagItemHandler toolBag = new ShapeShiftingToolBagItemHandler(player.inventory.getStackInSlot(message.slot));
 			toolBag.updateStack(player.inventory.getStackInSlot(message.slot).copy());
@@ -52,7 +52,7 @@ public class MessageShapeShiftTool implements IMessage, IMessageHandler<MessageS
 			}
 			if(newStack != player.inventory.getStackInSlot(message.slot) && !ItemStack.areItemsEqual(newStack, player.inventory.getStackInSlot(message.slot))) {
 				player.inventory.setInventorySlotContents(message.slot, newStack);
-				return new MessageShapeShiftToolClient();
+				return null;
 			}
 		}
 		return null;
@@ -61,15 +61,20 @@ public class MessageShapeShiftTool implements IMessage, IMessageHandler<MessageS
 	public MessageShapeShiftTool() {}
 
 	public MessageShapeShiftTool(int slot, RayTraceResult result) {
-		isMis = result.typeOfHit == Type.MISS;
-		isEntityResult = result.typeOfHit == Type.ENTITY;
-		this.slot = slot;
-		if(isEntityResult)
-			id = result.entityHit.getEntityId();
-		else {
-			x = result.getBlockPos().getX();
-			y = result.getBlockPos().getY();
-			z = result.getBlockPos().getZ();
+		if(result == null) {
+			isMis = true;
+			isEntityResult = false;
+		} else {
+			isMis = result.typeOfHit == Type.MISS;
+			isEntityResult = result.typeOfHit == Type.ENTITY;
+			this.slot = slot;
+			if(isEntityResult)
+				id = result.entityHit.getEntityId();
+			else {
+				x = result.getBlockPos().getX();
+				y = result.getBlockPos().getY();
+				z = result.getBlockPos().getZ();
+			}
 		}
 
 	}
