@@ -25,7 +25,7 @@ public class InventoryHelper {
 	public static ItemStack findItemStackOfType(EntityPlayer player, ItemStack type) {
 		ItemStack copy = type.copy();
 		copy.setItemDamage(OreDictionary.WILDCARD_VALUE);
-		int i = player.inventory.getSlotFor(copy);
+		int i = getSlotFor(copy, player.inventory);
 		if(i == -1)
 			return ItemStack.EMPTY;
 		return player.inventory.getStackInSlot(i);
@@ -110,5 +110,23 @@ public class InventoryHelper {
 
         return count;
 	}
+	
+    public static int getSlotFor(ItemStack stack, InventoryPlayer ip)
+    {
+        for (int i = 0; i < ip.mainInventory.size(); ++i)
+        {
+            if (!((ItemStack)ip.mainInventory.get(i)).isEmpty() && stackEqualExact(stack, ip.mainInventory.get(i)))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+    
+    private static boolean stackEqualExact(ItemStack stack1, ItemStack stack2)
+    {
+        return stack1.getItem() == stack2.getItem() && (!stack1.getHasSubtypes() || stack1.getMetadata() == stack2.getMetadata()) && ItemStack.areItemStackTagsEqual(stack1, stack2);
+    }
 	
 }
